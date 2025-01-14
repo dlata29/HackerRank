@@ -7,7 +7,25 @@
   </head>
   <body>
     <script>
-      console.log("ans is ", plusMinus([-4, 3, -9, 0, 4, 1]));
+      function miniMaxSum(arr) {
+        let final = [];
+
+        const totalSum = arr.reduce(
+          (accumulator, currentValue) => accumulator + currentValue,
+          0
+        );
+        console.log(totalSum + "totalsum");
+        // Create a new array with the sum of all elements except the current element
+
+        const result = arr.map((num) => totalSum - num);
+
+        final.push(Math.min(...result));
+        final.push(Math.max(...result));
+
+        return final;
+      }
+
+      console.log("ans is ", miniMaxSum([1, 2, 3, 4, 5]));
     </script>
   </body>
 </html>
