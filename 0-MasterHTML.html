@@ -7,25 +7,16 @@
   </head>
   <body>
     <script>
-      function miniMaxSum(arr) {
-        let final = [];
-
-        const totalSum = arr.reduce(
-          (accumulator, currentValue) => accumulator + currentValue,
-          0
-        );
-        console.log(totalSum + "totalsum");
-        // Create a new array with the sum of all elements except the current element
-
-        const result = arr.map((num) => totalSum - num);
-
-        final.push(Math.min(...result));
-        final.push(Math.max(...result));
-
-        return final;
+      function matchingStrings(a) {
+        let ans = 0;
+        a.forEach((ele) => {
+          let count = a.filter((str) => str === ele).length;
+          if (count == 1) ans = ele;
+        });
+        return ans;
       }
 
-      console.log("ans is ", miniMaxSum([1, 2, 3, 4, 5]));
+      console.log("ans is ", matchingStrings([1, 2, 3, 4, 2, 3, 4]));
     </script>
   </body>
 </html>

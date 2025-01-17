@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Overview</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      #dashboard {
+        padding: 20px;
+      }
+
+      #tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .tab {
+        padding: 10px 15px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+        background-color: #f4f4f4;
+      }
+
+      .tab.active {
+        background-color: #007bff;
+        color: #fff;
+      }
+
+      #controls {
+        margin-bottom: 20px;
+      }
+
+      #grid {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      #grid th,
+      #grid td {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+
+      #grid th {
+        background-color: #f2f2f2;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="dashboard">
+      <h1>Dashboard Overview</h1>
+      <div id="tabs"></div>
+      <div id="content">
+        <div id="controls">
+          <button id="groupByDate">Group by Date</button>
+          <button id="groupByTag">Group by Tag</button>
+        </div>
+        <div id="grid"></div>
+      </div>
+    </div>
+    <script>
+      // Simulate the folder structure and CSV files
+      const folderStructure = {
+        "/folder": ["a.csv", "b.csv", "c.csv"],
+      };
+
+      // Sample CSV content
+      const csvData = {
+        "a.csv": "Name,Age,Location\nAlice,30,New York\nBob,25,Los Angeles",
+        "b.csv": "Product,Price,Stock\nLaptop,1000,20\nMouse,20,100",
+        "c.csv":
+          "Task,Priority,Status\nCode,High,In Progress\nTest,Medium,Pending",
+      };
+
+      // Helper: Parse CSV into a table
+      function parseCSVToTable(csvContent) {
+        const rows = csvContent.split("\n");
+        const table = document.createElement("table");
+        const thead = document.createElement("thead");
+        const tbody = document.createElement("tbody");
+
+        rows.forEach((row, index) => {
+          const tr = document.createElement("tr");
+          row.split(",").forEach((cell) => {
+            const td = document.createElement(index === 0 ? "th" : "td");
+            td.textContent = cell;
+            tr.appendChild(td);
+          });
+          if (index === 0) thead.appendChild(tr);
+          else tbody.appendChild(tr);
+        });
+
+        table.appendChild(thead);
+        table.appendChild(tbody);
+        return table;
+      }
+
+      // Create Tabs
+      function createTabs(folderStructure) {
+        const tabsContainer = document.getElementById("tabs");
+        tabsContainer.innerHTML = ""; // Clear existing tabs
+
+        Object.keys(folderStructure).forEach((folder, folderIndex) => {
+          const tab = document.createElement("div");
+          tab.className = `tab ${folderIndex === 0 ? "active" : ""}`;
+          tab.textContent = folder.replace("/", "");
+          tab.dataset.folder = folder;
+          tabsContainer.appendChild(tab);
+
+          // Attach click event to load CSVs
+          tab.addEventListener("click", () => {
+            document
+              .querySelectorAll(".tab")
+              .forEach((t) => t.classList.remove("active"));
+            tab.classList.add("active");
+            loadCSVs(folderStructure[folder]);
+          });
+        });
+      }
+
+      // Load CSV files into the grid
+      function loadCSVs(csvFiles) {
+        const grid = document.getElementById("grid");
+        grid.innerHTML = ""; // Clear the grid
+
+        csvFiles.forEach((csvFile) => {
+          const csvContent = csvData[csvFile];
+          if (csvContent) {
+            const table = parseCSVToTable(csvContent);
+            const title = document.createElement("h3");
+            title.textContent = csvFile;
+            grid.appendChild(title);
+            grid.appendChild(table);
+          }
+        });
+      }
+
+      // Add Grouping and Filtering (Placeholder)
+      document.getElementById("groupByDate").addEventListener("click", () => {
+        alert("Group by Date feature coming soon!");
+      });
+      document.getElementById("groupByTag").addEventListener("click", () => {
+        alert("Group by Tag feature coming soon!");
+      });
+
+      // Initialize
+      createTabs(folderStructure);
+      loadCSVs(folderStructure["/folder"]);
+    </script>
+  </body>
+</html>
