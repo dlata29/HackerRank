@@ -68,12 +68,17 @@
       </div>
     </div>
     <script>
-      // Simulate the folder structure and CSV files
+      // Folder structure and sample CSV metadata
       const folderStructure = {
         "/folder": ["a.csv", "b.csv", "c.csv"],
       };
 
-      // Sample CSV content
+      const csvMetadata = {
+        "a.csv": { date: "2025-01-01", tags: ["Finance", "Q1"] },
+        "b.csv": { date: "2025-02-15", tags: ["Inventory", "Q2"] },
+        "c.csv": { date: "2025-03-10", tags: ["Tasks", "Q3"] },
+      };
+
       const csvData = {
         "a.csv": "Name,Age,Location\nAlice,30,New York\nBob,25,Los Angeles",
         "b.csv": "Product,Price,Stock\nLaptop,1000,20\nMouse,20,100",
@@ -81,80 +86,105 @@
           "Task,Priority,Status\nCode,High,In Progress\nTest,Medium,Pending",
       };
 
-      // Helper: Parse CSV into a table
-      function parseCSVToTable(csvContent) {
-        const rows = csvContent.split("\n");
+      // Helper: Parse CSV string into a table element
+      function parseCSVToTable(csvString) {
+        const rows = csvString.split("\n");
         const table = document.createElement("table");
-        const thead = document.createElement("thead");
-        const tbody = document.createElement("tbody");
-
-        rows.forEach((row, index) => {
+        table.border = "1";
+        rows.forEach((row, rowIndex) => {
           const tr = document.createElement("tr");
           row.split(",").forEach((cell) => {
-            const td = document.createElement(index === 0 ? "th" : "td");
-            td.textContent = cell;
+            const td = document.createElement(rowIndex === 0 ? "th" : "td");
+            td.textContent = cell.trim();
             tr.appendChild(td);
           });
-          if (index === 0) thead.appendChild(tr);
-          else tbody.appendChild(tr);
+          table.appendChild(tr);
         });
-
-        table.appendChild(thead);
-        table.appendChild(tbody);
         return table;
       }
 
-      // Create Tabs
-      function createTabs(folderStructure) {
-        const tabsContainer = document.getElementById("tabs");
-        tabsContainer.innerHTML = ""; // Clear existing tabs
+      // Helper: Group by a property (e.g., date or tags)
+      function groupBy(array, key) {
+        return array.reduce((result, item) => {
+          const groupKey = Array.isArray(item[key]) ? item[key] : [item[key]];
+          groupKey.forEach((keyVal) => {
+            if (!result[keyVal]) result[keyVal] = [];
+            result[keyVal].push(item.file);
+          });
+          return result;
+        }, {});
+      }
 
-        Object.keys(folderStructure).forEach((folder, folderIndex) => {
-          const tab = document.createElement("div");
-          tab.className = `tab ${folderIndex === 0 ? "active" : ""}`;
-          tab.textContent = folder.replace("/", "");
-          tab.dataset.folder = folder;
-          tabsContainer.appendChild(tab);
+      // Helper: Display grouped data
+      function displayGroupedData(groupedData, groupType) {
+        const grid = document.getElementById("grid");
+        grid.innerHTML = ""; // Clear existing content
 
-          // Attach click event to load CSVs
-          tab.addEventListener("click", () => {
-            document
-              .querySelectorAll(".tab")
-              .forEach((t) => t.classList.remove("active"));
-            tab.classList.add("active");
-            loadCSVs(folderStructure[folder]);
+        Object.keys(groupedData).forEach((groupKey) => {
+          const groupTitle = document.createElement("h2");
+          groupTitle.textContent = `${groupType}: ${groupKey}`;
+          grid.appendChild(groupTitle);
+
+          groupedData[groupKey].forEach((csvFile) => {
+            const csvContent = csvData[csvFile];
+            if (csvContent) {
+              const table = parseCSVToTable(csvContent);
+              const title = document.createElement("h3");
+              title.textContent = csvFile;
+              grid.appendChild(title);
+              grid.appendChild(table);
+            }
           });
         });
       }
 
-      // Load CSV files into the grid
-      function loadCSVs(csvFiles) {
+      // Render CSV files in tabs
+      function renderTabs() {
+        const tabs = document.getElementById("tabs");
         const grid = document.getElementById("grid");
-        grid.innerHTML = ""; // Clear the grid
+        tabs.innerHTML = ""; // Clear existing tabs
 
-        csvFiles.forEach((csvFile) => {
-          const csvContent = csvData[csvFile];
-          if (csvContent) {
-            const table = parseCSVToTable(csvContent);
-            const title = document.createElement("h3");
-            title.textContent = csvFile;
-            grid.appendChild(title);
-            grid.appendChild(table);
-          }
+        Object.keys(folderStructure).forEach((folder) => {
+          const tab = document.createElement("button");
+          tab.textContent = folder;
+          tab.addEventListener("click", () => {
+            grid.innerHTML = ""; // Clear previous content
+            folderStructure[folder].forEach((csvFile) => {
+              const csvContent = csvData[csvFile];
+              if (csvContent) {
+                const table = parseCSVToTable(csvContent);
+                const title = document.createElement("h3");
+                title.textContent = csvFile;
+                grid.appendChild(title);
+                grid.appendChild(table);
+              }
+            });
+          });
+          tabs.appendChild(tab);
         });
       }
 
-      // Add Grouping and Filtering (Placeholder)
+      // Event listeners for grouping
       document.getElementById("groupByDate").addEventListener("click", () => {
-        alert("Group by Date feature coming soon!");
-      });
-      document.getElementById("groupByTag").addEventListener("click", () => {
-        alert("Group by Tag feature coming soon!");
+        const filesWithMetadata = Object.keys(csvMetadata).map((file) => ({
+          file,
+          date: csvMetadata[file].date,
+        }));
+        const groupedByDate = groupBy(filesWithMetadata, "date");
+        displayGroupedData(groupedByDate, "Date");
       });
 
-      // Initialize
-      createTabs(folderStructure);
-      loadCSVs(folderStructure["/folder"]);
+      document.getElementById("groupByTag").addEventListener("click", () => {
+        const filesWithMetadata = Object.keys(csvMetadata).map((file) => ({
+          file,
+          tags: csvMetadata[file].tags,
+        }));
+        const groupedByTag = groupBy(filesWithMetadata, "tags");
+        displayGroupedData(groupedByTag, "Tag");
+      });
+
+      // Initialize tabs on page load
+      renderTabs();
     </script>
   </body>
 </html>
