@@ -13,4 +13,5 @@ function plusMinus(arr) {
     (neg / len).toFixed(6),
     (zero / len).toFixed(6),
   ].map(Number);
+  console.log("");
 }
