@@ -8,15 +8,26 @@
   <body>
     <script>
       function matchingStrings(a) {
+        let b = {};
         let ans = 0;
-        a.forEach((ele) => {
-          let count = a.filter((str) => str === ele).length;
-          if (count == 1) ans = ele;
-        });
+
+        for (i = 0; i < a.length; i++) {
+          if (b[key]) {
+            b[key]++; // If key exists, increment count
+          } else {
+            b[key] = 1; // If key doesn't exist, initialize count to 1
+          }
+        }
+
+        for (let key in b) {
+          if (b[key] == 1) {
+            ans = key;
+          }
+        }
         return ans;
       }
 
-      console.log("ans is ", matchingStrings([1, 2, 3, 4, 2, 3, 4]));
+      console.log("ans is ", matchingStrings([1, 2, 3, 4, 2, 3, 1]));
     </script>
   </body>
 </html>
