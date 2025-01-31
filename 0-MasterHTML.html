@@ -8,24 +8,11 @@
   <body>
     <script>
       function matchingStrings(a) {
-        let b = {};
         let ans = 0;
 
-        for (i = 0; i < a.length; i++) {
-          let key = a[i];
-          if (b[key]) {
-            b[key]++; // If key exists, increment count
-          } else {
-            b[key] = 1; // If key doesn't exist, initialize count to 1
-          }
-        }
-        console.log(b);
-
-        for (let key in b) {
-          if (b[key] == 1) {
-            ans = key;
-          }
-        }
+        ans = a.find(
+          (ele, index) => a.indexOf(ele) == index && a.lastIndexOf(ele) == index
+        );
         return ans;
       }
 
