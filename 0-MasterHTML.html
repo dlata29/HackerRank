@@ -7,16 +7,9 @@
   </head>
   <body>
     <script>
-      function matchingStrings(a) {
-        let ans = 0;
+      function matchingStrings(a) {}
 
-        ans = a.find(
-          (ele, index) => a.indexOf(ele) == index && a.lastIndexOf(ele) == index
-        );
-        return ans;
-      }
-
-      console.log("ans is ", matchingStrings([1, 2, 3, 4, 2, 3, 1]));
+      console.log("ans is ", matchingStrings([1, 2, 5, 4, 3]));
     </script>
   </body>
 </html>
