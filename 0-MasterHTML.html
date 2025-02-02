@@ -7,9 +7,31 @@
   </head>
   <body>
     <script>
-      function matchingStrings(a) {}
+      function matchingStrings(arr) {
+        let n = arr.length;
 
-      console.log("ans is ", matchingStrings([1, 2, 5, 4, 3]));
+        // Step 1: Sort the array
+        arr.sort((a, b) => a - b);
+
+        // Step 2: Find the middle index
+        let mid = Math.floor((n - 1) / 2);
+
+        // Step 3: Swap the middle element with the last element
+        [arr[mid], arr[n - 1]] = [arr[n - 1], arr[mid]];
+
+        // Step 4: Reverse the second half of the array (after mid)
+        let left = mid + 1;
+        let right = n - 1;
+        while (left < right) {
+          [arr[left], arr[right]] = [arr[right], arr[left]];
+          left++;
+          right--;
+        }
+
+        return arr;
+      }
+
+      console.log("ans is ", matchingStrings([2, 3, 5, 1, 4]));
     </script>
   </body>
 </html>
