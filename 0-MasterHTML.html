@@ -8,24 +8,20 @@
   <body>
     <script>
       function matchingStrings(arr) {
-        let n = arr.length;
-
         // Step 1: Sort the array
         arr.sort((a, b) => a - b);
 
         // Step 2: Find the middle index
-        let mid = Math.floor((n - 1) / 2);
+        let mid = Math.floor(arr.length / 2);
 
-        // Step 3: Swap the middle element with the last element
-        [arr[mid], arr[n - 1]] = [arr[n - 1], arr[mid]];
+        // Step 3: Store a = mid - 1
+        let a = mid - 1;
 
-        // Step 4: Reverse the second half of the array (after mid)
-        let left = mid + 1;
-        let right = n - 1;
-        while (left < right) {
-          [arr[left], arr[right]] = [arr[right], arr[left]];
-          left++;
-          right--;
+        // Step 4: Swap logic starting from i = 1
+        for (let i = 1; i <= a + 1; i++) {
+          let temp = arr[i];
+          arr[i] = arr[mid + i];
+          arr[a + 2] = temp;
         }
 
         return arr;
