@@ -7,19 +7,18 @@
   </head>
   <body>
     <script>
-      var majorityElement = function (nums) {
-        let countMap = {}; // Object to store frequency
+      var maxProfit = function (prices) {
+        let min = prices[0];
+        let profit = 0;
 
-        for (let num of nums) {
-        countMap[num]= (countMap[num] || 0) +1;
+        for (let i = 0; i < prices.length; i++) {
+          min = Math.min(prices[i], min);
+          profit = Math.max(prices[i] - min, profit);
         }
-
-        let countMax = Object.keys(countMap).reduce((max,key)=>{
-            countMax= countMap(key) >
-        },0)
+        return profit;
       };
       // Calling the function
-      const result = majorityElement([2, 2, 1, 1, 1, 2, 2]);
+      const result = maxProfit([7, 1, 5, 3, 6, 4]);
       console.log(result);
     </script>
   </body>
