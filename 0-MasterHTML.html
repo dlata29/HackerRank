@@ -11,12 +11,12 @@
         let countMap = {}; // Object to store frequency
 
         for (let num of nums) {
-          countMap[num] = (countMap[num] || 0) + 1;
+        countMap[num]= (countMap[num] || 0) +1;
         }
-        const maxKey = Object.keys(countMap).reduce((max, key) =>
-          countMap[key] === Math.max(...Object.values(countMap)) ? key : max
-        );
-        return maxKey;
+
+        let countMax = Object.keys(countMap).reduce((max,key)=>{
+            countMax= countMap(key) >
+        },0)
       };
       // Calling the function
       const result = majorityElement([2, 2, 1, 1, 1, 2, 2]);
