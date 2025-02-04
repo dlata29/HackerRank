@@ -11,13 +11,16 @@
         name: "Divya",
         city: "Blr",
         introduce: function () {
-          console.log(`Hi, this is ${this.name} and I am from ${this.city} `);
+          return `Hi, this is ${this.name} and I am from ${this.city}`;
         },
       };
       console.log("hi", person1.introduce.bind(person1)());
       // setTimeout(function () {
       //   person1.introduce.bind(person1)();
       // }, 1000);
+      (function sayHi() {
+        console.log("Hi");
+      })();
     </script>
   </body>
 </html>
