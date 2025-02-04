@@ -7,27 +7,17 @@
   </head>
   <body>
     <script>
-      function minimumBribes(q) {
-        let count = 0;
-        for (i = 0; i < q.length; i++) {
-          if (q[i] != i + 1) {
-            if (
-              i + 1 == q[i] - 1 ||
-              i + 2 == q[i] - 1 ||
-              Math.abs(i - 2) == q[i] ||
-              Math.abs(i - 3) == q[i]
-            ) {
-              count++;
-            } else {
-              return "TOO";
-            }
-          }
-        }
-        return count;
-      }
-
-      const result = minimumBribes([2, 1, 5, 3, 4]);
-      console.log(result);
+      const person1 = {
+        name: "Divya",
+        city: "Blr",
+        introduce: function () {
+          console.log(`Hi, this is ${this.name} and I am from ${this.city} `);
+        },
+      };
+      console.log("hi", person1.introduce.bind(person1)());
+      // setTimeout(function () {
+      //   person1.introduce.bind(person1)();
+      // }, 1000);
     </script>
   </body>
 </html>
