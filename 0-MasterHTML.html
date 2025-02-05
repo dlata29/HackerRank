@@ -6,8 +6,18 @@
     <title>Document</title>
   </head>
   <body>
-    <div id="dv">Text</div>
     <button id="btn">Clcik</button>
-    <script></script>
+    <div id="dv">Text</div>
+
+    <script>
+      const a = document.getElementById("dv");
+      const btn = document.getElementById("btn");
+
+      btn.addEventListener("click", () => {
+        const el = document.createElement("li");
+        el.innerText = "Divya";
+        a.appendChild(el);
+      });
+    </script>
   </body>
 </html>
