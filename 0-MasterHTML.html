@@ -6,18 +6,20 @@
     <title>Document</title>
   </head>
   <body>
-    <button id="btn">Clcik</button>
-    <div id="dv">Text</div>
+    <div>Hello <span id="s"></span></div>
 
     <script>
-      const a = document.getElementById("dv");
-      const btn = document.getElementById("btn");
+      function add(to) {
+        return function addB(sub) {
+          return function addC(matter) {
+            console.log(
+              `Hi Email to ${to} with sub : ${sub} and matter is ${matter}`
+            );
+          };
+        };
+      }
 
-      btn.addEventListener("click", () => {
-        const el = document.createElement("li");
-        el.innerText = "Divya";
-        a.appendChild(el);
-      });
+      const a1 = add(5)(4)(2);
     </script>
   </body>
 </html>
