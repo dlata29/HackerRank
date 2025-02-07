@@ -9,19 +9,21 @@
     <div>Hello <span id="s"></span></div>
 
     <script>
-      if (!Array.prototype.myMap) {
-        Array.prototype.myMap = function (callback) {
-          let result = []; // Store new array
-          for (let i = 0; i < this.length; i++) {
-            result.push(callback(this[i], i, this)); // Apply callback to each element
-          }
-          return result; // Return the transformed array
-        };
-      }
+      var maxProfit = function (prices) {
+        let max = 0;
+        let curr = {};
 
-      const numbers = [1, 2, 3];
-      const doubled = numbers.myMap((num) => num * 2);
-      console.log(doubled); // [2, 4, 6]
+        for (let i = 0; i < prices.length; i++) {
+          let c = prices[i];
+          let m = Math.max(...prices.slice(i + 1, prices.length));
+
+          max = m - c > 0 && m - c > max ? m - c : max;
+        }
+
+        return max;
+      };
+
+      console.log(maxProfit([7, 1, 5, 3, 6, 4]));
     </script>
   </body>
 </html>
