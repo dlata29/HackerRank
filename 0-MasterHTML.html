@@ -9,14 +9,19 @@
     <div>Hello <span id="s"></span></div>
 
     <script>
-      function add(a) {
-        return a * a;
+      if (!Array.prototype.myMap) {
+        Array.prototype.myMap = function (callback) {
+          let result = []; // Store new array
+          for (let i = 0; i < this.length; i++) {
+            result.push(callback(this[i], i, this)); // Apply callback to each element
+          }
+          return result; // Return the transformed array
+        };
       }
 
-      const a1 = add(5);
-      const a2 = add(5);
-      console.log(a1);
-      console.log(a2);
+      const numbers = [1, 2, 3];
+      const doubled = numbers.myMap((num) => num * 2);
+      console.log(doubled); // [2, 4, 6]
     </script>
   </body>
 </html>
