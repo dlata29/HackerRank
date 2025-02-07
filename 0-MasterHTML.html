@@ -10,15 +10,13 @@
 
     <script>
       function add(a) {
-        return function (b) {
-          return function (c) {
-            return a + b + c;
-          };
-        };
+        return a * a;
       }
 
-      const a1 = add(5)(4)(2);
+      const a1 = add(5);
+      const a2 = add(5);
       console.log(a1);
+      console.log(a2);
     </script>
   </body>
 </html>
