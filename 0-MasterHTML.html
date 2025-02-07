@@ -9,16 +9,6 @@
     <div>Hello <span id="s"></span></div>
 
     <script>
-      function add(to) {
-        return function addB(sub) {
-          return function addC(matter) {
-            console.log(
-              `Hi Email to ${to} with sub : ${sub} and matter is ${matter}`
-            );
-          };
-        };
-      }
-
       const a1 = add(5)(4)(2);
     </script>
   </body>
