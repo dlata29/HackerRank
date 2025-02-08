@@ -6,24 +6,27 @@
     <title>Document</title>
   </head>
   <body>
-    <div>Hello <span id="s"></span></div>
-
     <script>
-      var maxProfit = function (prices) {
-        let max = 0;
-        let curr = {};
+      function substrings(s) {
+        let result = [];
 
-        for (let i = 0; i < prices.length; i++) {
-          let c = prices[i];
-          let m = Math.max(...prices.slice(i + 1, prices.length));
+        let sortedStr = s
+          .split("")
+          .sort((a, b) => b.localeCompare(a))
+          .join("");
 
-          max = m - c > 0 && m - c > max ? m - c : max;
+        console.log(sortedStr);
+
+        for (let i = 0; i < sortedStr.length; i++) {
+          result.push(sortedStr.slice(0, i + 1));
         }
 
-        return max;
-      };
+        return result;
+      }
 
-      console.log(maxProfit([7, 1, 5, 3, 6, 4]));
+      let ip = "abcd";
+      let output = substrings(ip);
+      console.log(output);
     </script>
   </body>
 </html>
