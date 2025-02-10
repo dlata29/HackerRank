@@ -13,12 +13,12 @@
         for (let num of nums) {
           countMap[num] = (countMap[num] || 0) + 1;
         }
-        Object.values(countMap).forEach((key) => console.log(key));
-      };
 
-      for (let key in countMap) {
-        console.log(key, countMap[key]);
-      }
+        let max = Math.max(...Object.values(countMap));
+        let key = Object.keys(countMap).find((key) => countMap[key] === max);
+
+        return key;
+      };
 
       console.log(majorityElement([3, 2, 3, 2, 2, 4]));
     </script>
