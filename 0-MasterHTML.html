@@ -7,25 +7,9 @@
   </head>
   <body>
     <script>
-      var majorityElement = function (nums) {
-        let count = 0;
-        let candidate = null;
+      var rotate = function (nums, k) {};
 
-        for (let i = 0; i < nums.length; i++) {
-          if (count == 0) {
-            count++;
-            candidate = nums[i];
-          } else if (nums[i] === candidate) {
-            count++;
-          } else {
-            count--;
-          }
-        }
-
-        return candidate;
-      };
-
-      console.log(majorityElement([3, 2, 3, 2, 2, 4]));
+      console.log(rotate([3, 2, 3, 2, 2, 4]));
     </script>
   </body>
 </html>
