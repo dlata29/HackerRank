@@ -8,16 +8,21 @@
   <body>
     <script>
       var majorityElement = function (nums) {
-        let countMap = {}; // Object to store frequency
+        let count = 0;
+        let candidate = null;
 
-        for (let num of nums) {
-          countMap[num] = (countMap[num] || 0) + 1;
+        for (let i = 0; i < nums.length; i++) {
+          if (count == 0) {
+            count++;
+            candidate = nums[i];
+          } else if (nums[i] === candidate) {
+            count++;
+          } else {
+            count--;
+          }
         }
 
-        let max = Math.max(...Object.values(countMap));
-        let key = Object.keys(countMap).find((key) => countMap[key] === max);
-
-        return key;
+        return candidate;
       };
 
       console.log(majorityElement([3, 2, 3, 2, 2, 4]));
