@@ -5,30 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
+  <div id="parent" style="padding: 50px; background-color: lightblue">
+    Parent Element
+    <div id="child" style="padding: 50px; background-color: lightcoral">
+      Child Element
+    </div>
+  </div>
   <body>
     <script>
-      var jump = function (nums) {
-        let maxReach = 0;
-        let count = false;
+      document.getElementById("parent").addEventListener(
+        "click",
+        () => {
+          console.log("Parent clicked (Capturing Phase)");
+        },
+        true
+      ); // true makes it the capturing phase
 
-        for (let i = 0; i < nums.length; i++) {
-          let index = i + nums[i];
-          let local = 1;
-          while (nums.length - 1 > index) {
-            index = index + nums[index];
-            local++;
-          }
+      // Event Listener on Child (Bubbling Phase - Default)
+      document.getElementById("child").addEventListener("click", () => {
+        console.log("Child clicked (Bubbling Phase)");
+      });
 
-          if (index >= nums.length - 1) {
-            count = true;
-          }
-        }
+      // Event Listener on Parent (Bubbling Phase - Default)
+      document.getElementById("parent").addEventListener("click", () => {
+        console.log("Parent clicked (Bubbling Phase)");
+      });
 
-        return count;
-        //a
-      };
-
-      console.log(jump([2, 3, 1, 1, 4]));
+      // Event Listener on Child with Stop Propagation (Bubbling Phase)
+      document.getElementById("child").addEventListener("click", (event) => {
+        console.log("Child clicked (with stopPropagation)");
+        event.stopPropagation(); // Stops the event from bubbling up
+      });
     </script>
   </body>
 </html>
