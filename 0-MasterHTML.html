@@ -13,29 +13,25 @@
   </div>
   <body>
     <script>
-      document.getElementById("parent").addEventListener(
-        "click",
-        () => {
-          console.log("Parent clicked (Capturing Phase)");
-        },
-        true
-      ); // true makes it the capturing phase
+      var jump = function (nums) {
+        let count = 0;
+        let step = 0;
+        if (nums[0] == 0) return 0;
+        else {
+          for (let i = 0; i < nums.length; i++) {
+            step = i + num[i];
+            let max = Math.max(...nums.slice(i, step));
+            if (max > step) {
+              step = nums.indexOf(max);
+            }
+            i = step;
+            count++;
+          }
+        }
+        return;
+      };
 
-      // Event Listener on Child (Bubbling Phase - Default)
-      document.getElementById("child").addEventListener("click", () => {
-        console.log("Child clicked (Bubbling Phase)");
-      });
-
-      // Event Listener on Parent (Bubbling Phase - Default)
-      document.getElementById("parent").addEventListener("click", () => {
-        console.log("Parent clicked (Bubbling Phase)");
-      });
-
-      // Event Listener on Child with Stop Propagation (Bubbling Phase)
-      document.getElementById("child").addEventListener("click", (event) => {
-        console.log("Child clicked (with stopPropagation)");
-        event.stopPropagation(); // Stops the event from bubbling up
-      });
+      console.log(jump([2, 3, 1, 1, 4]));
     </script>
   </body>
 </html>
