@@ -13,25 +13,12 @@
   </div>
   <body>
     <script>
-      var jump = function (nums) {
-        let count = 0;
-        let step = 0;
-        if (nums[0] == 0) return 0;
-        else {
-          for (let i = 0; i < nums.length; i++) {
-            step = i + num[i];
-            let max = Math.max(...nums.slice(i, step));
-            if (max > step) {
-              step = nums.indexOf(max);
-            }
-            i = step;
-            count++;
-          }
-        }
-        return;
+      var productExceptSelf = function (nums) {
+        let total = nums.reduce((acc, index) => acc + nums[index], 0);
+        console.log(total);
       };
 
-      console.log(jump([2, 3, 1, 1, 4]));
+      console.log(productExceptSelf([1, 2, 3, 4]));
     </script>
   </body>
 </html>
