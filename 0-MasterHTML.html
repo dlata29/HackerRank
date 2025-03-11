@@ -13,27 +13,26 @@
   </div>
   <body>
     <script>
-      var canCompleteCircuit = function (gas, cost) {
-        let totalGas = 0,
-          totalCost = 0;
-        let tank = 0,
-          index = 0;
-        for (let i = 0; i < gas.length; i++) {
-          totalGas += gas[i];
-          totalCost += cost[i];
+      var candy = function (ratings) {
+        let a = new Array(ratings.length).fill(1);
 
-          tank += gas[i] - cost[i];
-          console.log("tank", tank);
-          if (tank < 0) {
-            tank = 0;
-            index = i + 1;
+        if (ratings.length == 1) return 1;
+
+        // if (ratings[0] > ratings[1]) {
+        //   a[0] += 1;
+        // }
+
+        for (i = 1; i < ratings.length; i++) {
+          if (ratings[i] > ratings[i - 1]) {
+            a[i] += 1;
           }
         }
-        console.log({ totalGas, totalCost });
-        return totalGas >= totalCost ? index : -1;
+        return a.reduce((acc, curr) => {
+          acc + curr;
+        }, 0);
       };
 
-      console.log(canCompleteCircuit([1, 2, 3, 4, 5], [3, 4, 5, 1, 2]));
+      console.log(candy([1, 0, 2]));
     </script>
   </body>
 </html>
