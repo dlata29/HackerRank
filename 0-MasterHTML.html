@@ -18,18 +18,16 @@
 
         if (ratings.length == 1) return 1;
 
-        // if (ratings[0] > ratings[1]) {
-        //   a[0] += 1;
-        // }
+        if (ratings[0] > ratings[1]) {
+          a[0] += 1;
+        }
 
         for (i = 1; i < ratings.length; i++) {
           if (ratings[i] > ratings[i - 1]) {
             a[i] += 1;
           }
         }
-        return a.reduce((acc, curr) => {
-          acc + curr;
-        }, 0);
+        return a.reduce((acc, curr) => acc + curr, 0);
       };
 
       console.log(candy([1, 0, 2]));
