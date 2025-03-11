@@ -13,24 +13,27 @@
   </div>
   <body>
     <script>
-      var prefixP = function (a) {
-        let n = a.length;
-        let output = new Array(n).fill(1);
-        let prefix = 1;
-        for (let i = 0; i < n; i++) {
-          output[i] = prefix;
-          prefix *= a[i];
-        }
+      var canCompleteCircuit = function (gas, cost) {
+        let totalGas = 0,
+          totalCost = 0;
+        let tank = 0,
+          index = 0;
+        for (let i = 0; i < gas.length; i++) {
+          totalGas += gas[i];
+          totalCost += cost[i];
 
-        let sufix = 1;
-        for (let i = n - 1; i >= 0; i--) {
-          output[i] *= sufix;
-          sufix *= a[i];
+          tank += gas[i] - cost[i];
+          console.log("tank", tank);
+          if (tank < 0) {
+            tank = 0;
+            index = i + 1;
+          }
         }
-        return output;
+        console.log({ totalGas, totalCost });
+        return totalGas >= totalCost ? index : -1;
       };
 
-      console.log(prefixP([1, 2, 3, 4])); // Output: [24, 24, 12, 4]
+      console.log(canCompleteCircuit([1, 2, 3, 4, 5], [3, 4, 5, 1, 2]));
     </script>
   </body>
 </html>
