@@ -13,33 +13,40 @@
   </div>
   <body>
     <script>
-      var groupAnagrams = function (arr) {
-        function groupAnagrams(arr) {
-          let unique = []; // Store unique sorted words
-          let result = []; // Store grouped anagrams
+      var romanToInt = function (s) {
+        let rv = {
+          I: 1,
+          V: 5,
+          X: 10,
+          L: 50,
+          C: 100,
+          D: 500,
+          M: 1000,
+        };
 
-          for (let i = 0; i < arr.length; i++) {
-            let tempV = arr[i].split("").sort().join(""); // Sort word
+        let result = [];
 
-            let index = unique.indexOf(tempV); // Check if already seen
+        let ip = s.split("");
 
-            if (index === -1) {
-              // New group
-              unique.push(tempV);
-              result.push([arr[i]]);
-            } else {
-              // Existing group
-              result[index].push(arr[i]);
-            }
+        for (i = 0; i < ip.length; ) {
+          let val = rv[ip[i]];
+          if (
+            (s[i] === "I" && (s[i + 1] === "V" || s[i + 1] === "X")) ||
+            (s[i] === "X" && (s[i + 1] === "L" || s[i + 1] === "C")) ||
+            (s[i] === "C" && (s[i + 1] === "D" || s[i + 1] === "M"))
+          ) {
+            val = rv[ip[i + 1]] - rv[ip[i]];
+            i = i + 2;
+          } else {
+            i++;
           }
-
-          return result;
+          result.push(val);
         }
 
-        console.log(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]));
+        return result.reduce((acc, curr) => acc + curr, 0);
       };
 
-      console.log(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]));
+      console.log(romanToInt("MCMXCIV"));
     </script>
   </body>
 </html>
