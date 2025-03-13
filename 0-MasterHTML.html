@@ -13,40 +13,12 @@
   </div>
   <body>
     <script>
-      var romanToInt = function (s) {
-        let rv = {
-          I: 1,
-          V: 5,
-          X: 10,
-          L: 50,
-          C: 100,
-          D: 500,
-          M: 1000,
-        };
-
-        let result = [];
-
-        let ip = s.split("");
-
-        for (i = 0; i < ip.length; ) {
-          let val = rv[ip[i]];
-          if (
-            (s[i] === "I" && (s[i + 1] === "V" || s[i + 1] === "X")) ||
-            (s[i] === "X" && (s[i + 1] === "L" || s[i + 1] === "C")) ||
-            (s[i] === "C" && (s[i + 1] === "D" || s[i + 1] === "M"))
-          ) {
-            val = rv[ip[i + 1]] - rv[ip[i]];
-            i = i + 2;
-          } else {
-            i++;
-          }
-          result.push(val);
-        }
-
-        return result.reduce((acc, curr) => acc + curr, 0);
+      var lengthOfLastWord = function (s) {
+        let str = s.trim().split(" ");
+        return str[str.length - 1];
       };
 
-      console.log(romanToInt("MCMXCIV"));
+      console.log(lengthOfLastWord("   fly me   to   the moon  "));
     </script>
   </body>
 </html>
