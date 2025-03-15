@@ -13,29 +13,11 @@
   </div>
   <body>
     <script>
-      var convert = function (s, numRows) {
-        if (numRows === 1 || s.length <= numRows) return s; // Edge case
-
-        let result = "";
-
-        let cycleLen = 2 * (numRows - 1); // The repeating cycle length
-
-        for (let row = 0; row < numRows; row++) {
-          for (let i = row; i < s.length; i += cycleLen) {
-            result += s[i]; // Add the main column character
-
-            // Middle rows have an extra character between cycle jumps
-            let secondCharIdx = i + cycleLen - 2 * row;
-            if (row > 0 && row < numRows - 1 && secondCharIdx < s.length) {
-              result += s[secondCharIdx];
-            }
-          }
-        }
-
-        return result;
+      var strStr = function (haystack, needle) {
+        return haystack.lastIndexOf(needle);
       };
 
-      console.log(convert("PAYPALISHIRING", 3));
+      console.log(strStr("sadbutsad", "sad"));
     </script>
   </body>
 </html>
