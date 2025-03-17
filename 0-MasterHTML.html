@@ -13,11 +13,40 @@
   </div>
   <body>
     <script>
-      var strStr = function (haystack, needle) {
-        return haystack.lastIndexOf(needle);
+      function deepCopy(obj) {
+        if (obj === null || typeof obj !== "object") {
+          return obj; // Return primitives as-is
+        }
+
+        if (Array.isArray(obj)) {
+          return obj.map((item) => deepCopy(item)); // Recursively copy arrays
+        }
+
+        const copy = {}; // For objects
+        for (let key in obj) {
+          if (obj.hasOwnProperty(key)) {
+            copy[key] = deepCopy(obj[key]); // Recursively copy properties
+          }
+        }
+
+        return copy;
+      }
+
+      // ✅ Example Usage
+      const original = {
+        name: "John",
+        details: {
+          age: 30,
+          hobbies: ["reading", "traveling"],
+        },
       };
 
-      console.log(strStr("sadbutsad", "sad"));
+      const copied = deepCopy(original);
+      copied.details.age = 35;
+      copied.details.hobbies.push("coding");
+
+      console.log(original.details.age); // Output: 30 ✅ (Original is unaffected)
+      console.log(original.details.hobbies);
     </script>
   </body>
 </html>
