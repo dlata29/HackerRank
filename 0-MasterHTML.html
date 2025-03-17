@@ -13,42 +13,26 @@
   </div>
   <body>
     <script>
-      function deepCloneArray(arr) {
-        return arr.map((item) => {
-          if (Array.isArray(item)) {
-            return deepCloneArray(item); // Recursively clone nested arrays
-          } else if (typeof item === "object" && item !== null) {
-            return deepCloneObject(item); // Clone objects inside arrays
-          } else {
-            return item; // Return primitive values as-is
+      var isSubsequence = function (s, t) {
+        let count = 0;
+        let i = 0,
+          j = 0;
+        while (i < s.length) {
+          for (j; j < t.length; ) {
+            if (t[j] == s[i]) {
+              count++;
+              j = j + 1;
+              break;
+            } else {
+              j++;
+            }
           }
-        });
-      }
-
-      function deepCloneObject(obj) {
-        const clone = {};
-        for (let key in obj) {
-          if (obj.hasOwnProperty(key)) {
-            clone[key] = deepCloneArray([obj[key]])[0]; // Reuse deepCloneArray for objects
-          }
+          i++;
         }
-        return clone;
-      }
 
-      // ✅ Example Usage
-      const originalArray = [
-        { name: "Alice", age: 25 },
-        [1, 2, { a: "X", b: "Y" }],
-      ];
-
-      const clonedArray = deepCloneArray(originalArray);
-
-      // Modify the cloned array
-      clonedArray[0].age = 30;
-      clonedArray[1][2].a = "Z";
-
-      console.log(originalArray[0].age); // Output: 25 ✅ (Original is unaffected)
-      console.log(originalArray[1][2].a); // Output: "X" ✅ (Original is unaffected)
+        return count == s.length ? true : false;
+      };
+      console.log(isSubsequence("aaaaaa", "bbaaaa"));
     </script>
   </body>
 </html>
