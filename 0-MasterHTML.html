@@ -13,40 +13,42 @@
   </div>
   <body>
     <script>
-      function deepCopy(obj) {
-        if (obj === null || typeof obj !== "object") {
-          return obj; // Return primitives as-is
-        }
+      function deepCloneArray(arr) {
+        return arr.map((item) => {
+          if (Array.isArray(item)) {
+            return deepCloneArray(item); // Recursively clone nested arrays
+          } else if (typeof item === "object" && item !== null) {
+            return deepCloneObject(item); // Clone objects inside arrays
+          } else {
+            return item; // Return primitive values as-is
+          }
+        });
+      }
 
-        if (Array.isArray(obj)) {
-          return obj.map((item) => deepCopy(item)); // Recursively copy arrays
-        }
-
-        const copy = {}; // For objects
+      function deepCloneObject(obj) {
+        const clone = {};
         for (let key in obj) {
           if (obj.hasOwnProperty(key)) {
-            copy[key] = deepCopy(obj[key]); // Recursively copy properties
+            clone[key] = deepCloneArray([obj[key]])[0]; // Reuse deepCloneArray for objects
           }
         }
-
-        return copy;
+        return clone;
       }
 
       // ✅ Example Usage
-      const original = {
-        name: "John",
-        details: {
-          age: 30,
-          hobbies: ["reading", "traveling"],
-        },
-      };
+      const originalArray = [
+        { name: "Alice", age: 25 },
+        [1, 2, { a: "X", b: "Y" }],
+      ];
 
-      const copied = deepCopy(original);
-      copied.details.age = 35;
-      copied.details.hobbies.push("coding");
+      const clonedArray = deepCloneArray(originalArray);
 
-      console.log(original.details.age); // Output: 30 ✅ (Original is unaffected)
-      console.log(original.details.hobbies);
+      // Modify the cloned array
+      clonedArray[0].age = 30;
+      clonedArray[1][2].a = "Z";
+
+      console.log(originalArray[0].age); // Output: 25 ✅ (Original is unaffected)
+      console.log(originalArray[1][2].a); // Output: "X" ✅ (Original is unaffected)
     </script>
   </body>
 </html>
