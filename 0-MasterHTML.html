@@ -13,28 +13,16 @@
   </div>
   <body>
     <script>
-      var twoSum = function (numbers, target) {
-        let res = [];
-        let i = 0;
+      const obj = {
+        name: "Alice",
+        greet: () => {
+          setTimeout(() => {
+            console.log("Hello, " + this.name);
+          }, 1000);
+        },
+      }; // ✅ "Hello, Alice"
 
-        while (i < numbers.length) {
-          let j = i + 1;
-
-          while (j < numbers.length) {
-            if (numbers[i] + numbers[j] === target) {
-              res.push(i + 1);
-              res.push(j + 1);
-              return res;
-            }
-            j++;
-          }
-          i++;
-        }
-
-        return res;
-      };
-
-      console.log(twoSum([2, 3, 4], 6));
+      console.log(obj.greet());
     </script>
   </body>
 </html>
