@@ -13,26 +13,28 @@
   </div>
   <body>
     <script>
-      var isSubsequence = function (s, t) {
-        let count = 0;
-        let i = 0,
-          j = 0;
-        while (i < s.length) {
-          for (j; j < t.length; ) {
-            if (t[j] == s[i]) {
-              count++;
-              j = j + 1;
-              break;
-            } else {
-              j++;
+      var twoSum = function (numbers, target) {
+        let res = [];
+        let i = 0;
+
+        while (i < numbers.length) {
+          let j = i + 1;
+
+          while (j < numbers.length) {
+            if (numbers[i] + numbers[j] === target) {
+              res.push(i + 1);
+              res.push(j + 1);
+              return res;
             }
+            j++;
           }
           i++;
         }
 
-        return count == s.length ? true : false;
+        return res;
       };
-      console.log(isSubsequence("aaaaaa", "bbaaaa"));
+
+      console.log(twoSum([2, 3, 4], 6));
     </script>
   </body>
 </html>
