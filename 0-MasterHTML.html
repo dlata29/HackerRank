@@ -11,18 +11,14 @@
       1-2
     </div>
   </div>
+  <button id="myButton">text</button>
   <body>
     <script>
-      const obj = {
-        name: "Alice",
-        greet: () => {
-          setTimeout(() => {
-            console.log("Hello, " + this.name);
-          }, 1000);
-        },
-      }; // ✅ "Hello, Alice"
+      const btn = document.getElementById("myButton");
 
-      console.log(obj.greet());
+      btn.addEventListener(onclick, function (event) {
+        console.log(event);
+      });
     </script>
   </body>
 </html>
