@@ -11,14 +11,21 @@
       1-2
     </div>
   </div>
-  <button id="myButton">text</button>
-  <body>
-    <script>
-      const btn = document.getElementById("myButton");
 
-      btn.addEventListener(onclick, function (event) {
-        console.log(event);
-      });
-    </script>
+  <div id="container">
+    <button>Click me!</button>
+  </div>
+  <pre id="output"></pre>
+  <script>
+ const output = document.querySelector("#output");
+function handleClick(e) {
+  output.textContent += `You clicked on a ${e.currentTarget} element\n`;
+  console.log(e.currentTarget);
+}
+
+const container = document.querySelector("#container");
+container.addEventListener("click", handleClick);
+
+</script>
   </body>
 </html>
