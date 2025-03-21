@@ -3,29 +3,84 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Custom Dropdown</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+      .dropdown-btn {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: white;
+        border: 1px solid #ddd;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        width: 150px;
+        display: none;
+        border-radius: 5px;
+      }
+      .dropdown-menu a {
+        display: block;
+        padding: 10px;
+        text-decoration: none;
+        color: black;
+      }
+      .dropdown-menu a:hover {
+        background: #f1f1f1;
+      }
+      .show {
+        display: block;
+      }
+    </style>
   </head>
-  <div id="parent" style="padding: 50px; background-color: lightblue">
-    1
-    <div id="child" style="padding: 50px; background-color: lightcoral">
-      1-2
+  <body>
+    <div class="dropdown">
+      <button class="dropdown-btn">Select Option ⬇</button>
+      <div class="dropdown-menu">
+        <a href="#">Option 1</a>
+        <a href="#">Option 2</a>
+        <a href="#">Option 3</a>
+      </div>
     </div>
-  </div>
 
-  <div id="container">
-    <button>Click me!</button>
-  </div>
-  <pre id="output"></pre>
-  <script>
- const output = document.querySelector("#output");
-function handleClick(e) {
-  output.textContent += `You clicked on a ${e.currentTarget} element\n`;
-  console.log(e.currentTarget);
-}
+    <script>
+      const dropdownBtn = document.querySelector(".dropdown-btn");
+      const dropdownMenu = document.querySelector(".dropdown-menu");
 
-const container = document.querySelector("#container");
-container.addEventListener("click", handleClick);
+      // Toggle dropdown menu
+      dropdownBtn.addEventListener("click", (e) => {
+        dropdownMenu.classList.toggle("show");
+        e.stopPropagation(); // Prevent immediate closing
+      });
 
-</script>
+      // Close dropdown when clicking outside
+      document.addEventListener("click", (e) => {
+        if (
+          !dropdownBtn.contains(e.target) &&
+          !dropdownMenu.contains(e.target)
+        ) {
+          dropdownMenu.classList.remove("show");
+        }
+      });
+
+      // Close dropdown on Escape key
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          dropdownMenu.classList.remove("show");
+        }
+      });
+    </script>
   </body>
 </html>
