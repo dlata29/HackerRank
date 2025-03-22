@@ -3,84 +3,58 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Custom Dropdown</title>
+    <title>Document</title>
     <style>
       body {
         font-family: Arial, sans-serif;
       }
-      .dropdown {
-        position: relative;
-        display: inline-block;
+      #a {
+        background-color: coral;
+        padding: 20px;
+        min-height: 100vh;
       }
-      .dropdown-btn {
-        background-color: #007bff;
-        color: white;
-        padding: 10px 15px;
-        border: none;
-        cursor: pointer;
-        border-radius: 5px;
-      }
-      .dropdown-menu {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background: white;
-        border: 1px solid #ddd;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        width: 150px;
-        display: none;
-        border-radius: 5px;
-      }
-      .dropdown-menu a {
-        display: block;
+      .item {
+        background-color: white;
+        margin: 10px 0;
         padding: 10px;
-        text-decoration: none;
-        color: black;
-      }
-      .dropdown-menu a:hover {
-        background: #f1f1f1;
-      }
-      .show {
-        display: block;
+        border: 1px solid black;
       }
     </style>
   </head>
   <body>
-    <div class="dropdown">
-      <button class="dropdown-btn">Select Option ⬇</button>
-      <div class="dropdown-menu">
-        <a href="#">Option 1</a>
-        <a href="#">Option 2</a>
-        <a href="#">Option 3</a>
-      </div>
-    </div>
-
+    <div id="a"></div>
     <script>
-      const dropdownBtn = document.querySelector(".dropdown-btn");
-      const dropdownMenu = document.querySelector(".dropdown-menu");
-
-      // Toggle dropdown menu
-      dropdownBtn.addEventListener("click", (e) => {
-        dropdownMenu.classList.toggle("show");
-        e.stopPropagation(); // Prevent immediate closing
-      });
-
-      // Close dropdown when clicking outside
-      document.addEventListener("click", (e) => {
-        if (
-          !dropdownBtn.contains(e.target) &&
-          !dropdownMenu.contains(e.target)
-        ) {
-          dropdownMenu.classList.remove("show");
+      async function callMe() {
+        try {
+          let response = await fetch(
+            "https://jsonplaceholder.typicode.com/todos/1"
+          );
+          let data = await response.json();
+          console.log(JSON.stringify(data));
+        } catch (error) {
+          console.log(error);
         }
-      });
+      }
 
-      // Close dropdown on Escape key
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") {
-          dropdownMenu.classList.remove("show");
-        }
-      });
+      // console.log(callMe());
+
+      function call1() {
+        console.log("1");
+
+        console.log("2");
+        return call2();
+      }
+
+      function call2() {
+        setTimeout(async () => {
+          let response = await fetch(
+            "https://jsonplaceholder.typicode.com/todos/1"
+          );
+          let data = await response.json();
+          console.log(JSON.stringify(data));
+        });
+      }
+      console.log(call1());
     </script>
   </body>
 </html>
