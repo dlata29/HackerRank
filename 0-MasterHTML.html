@@ -24,26 +24,25 @@
   <body>
     <div id="a"></div>
     <script>
-      function debounce(func, delay) {
-        let timer = 0;
+      function memoize(fn) {
+        let cache = {};
         return function (...args) {
-          clearTimeout(timer);
-          timer = setTimeout(() => {
-            func.apply(this, args), delay;
-          });
+          let key = JSON.stringify(args);
+          if (key in cache) return cache[key];
+          cache[key] = fn.apply(this, args);
+          return cache[key];
         };
       }
-      function searchQuery(query) {
-        console.log("Searching for:", query);
-      }
-      const debouncedSearch = debounce(searchQuery, 500);
 
-      // Simulating multiple keystrokes
-      debouncedSearch("H");
-      debouncedSearch("He");
-      debouncedSearch("Hel");
-      debouncedSearch("Hell");
-      debouncedSearch("Hello"); // Only this call executes after 500ms
+      // Example: Memoizing a factorial function
+      function factorial(n) {
+        if (n === 0) return 1;
+        return n * factorial(n - 1);
+      }
+
+      const memoizedFactorial = memoize(factorial);
+      console.log(memoizedFactorial(5)); // 120 (Computed)
+      console.log(memoizedFactorial(5)); // 120 (Cached)
     </script>
   </body>
 </html>
