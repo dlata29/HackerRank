@@ -24,37 +24,26 @@
   <body>
     <div id="a"></div>
     <script>
-      async function callMe() {
-        try {
-          let response = await fetch(
-            "https://jsonplaceholder.typicode.com/todos/1"
-          );
-          let data = await response.json();
-          console.log(JSON.stringify(data));
-        } catch (error) {
-          console.log(error);
-        }
+      function debounce(func, delay) {
+        let timer = 0;
+        return function (...args) {
+          clearTimeout(timer);
+          timer = setTimeout(() => {
+            func.apply(this, args), delay;
+          });
+        };
       }
-
-      // console.log(callMe());
-
-      function call1() {
-        console.log("1");
-
-        console.log("2");
-        return call2();
+      function searchQuery(query) {
+        console.log("Searching for:", query);
       }
+      const debouncedSearch = debounce(searchQuery, 500);
 
-      function call2() {
-        setTimeout(async () => {
-          let response = await fetch(
-            "https://jsonplaceholder.typicode.com/todos/1"
-          );
-          let data = await response.json();
-          console.log(JSON.stringify(data));
-        });
-      }
-      console.log(call1());
+      // Simulating multiple keystrokes
+      debouncedSearch("H");
+      debouncedSearch("He");
+      debouncedSearch("Hel");
+      debouncedSearch("Hell");
+      debouncedSearch("Hello"); // Only this call executes after 500ms
     </script>
   </body>
 </html>
