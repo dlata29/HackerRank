@@ -26,9 +26,35 @@
     <script>
   
   var threeSum = function(nums) {
+
+    nums= nums.sort();
+
+   let result=[];
+   let left=0;
+   let right=nums.length-1;
+
+   for(left=0;left<right;){
+    const tempResult=[];
+
+if(nums[left]+nums[right]+nums[right--] == 0){
+tempResult.push(nums[left]);
+tempResult.push(nums[right]);
+tempResult.push(nums[right--]);
+
+result.push(tempResult);
+   }
+ 
+
+   if (Math.abs(nums[left]) < Math.abs(nums[right])) {
+            left++;
+        } else {
+            right--;
+        }
     
+        return tempResult;
+      }
   };
-      console.log(maxArea([-1,0,1,2,-1,-4]));
+      console.log(threeSum([-1,0,1,2,-1,-4]));
     </script>
   </body>
 </html>
