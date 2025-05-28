@@ -25,32 +25,10 @@
     <div id="a"></div>
     <script>
   
-  var maxArea = function (height) {
-        let max = 0;
-        let left = 0;
-        let right = height.length - 1;
-
-        while (left < right) {
-          let currHold =
-            height[left] < height[right]
-              ? (right - left) * height[left]
-              : (right - left) * height[right];
-
-          max = max >= currHold ? max : currHold;
-
-          if (height[left + 1] > height[left]) {
-            left++;
-          } else if (height[right] < height[right - 1]) {
-            right--;
-            left--;
-          } else {
-            right--;
-          }
-        }
-
-        return max;
-      };
-      console.log(maxArea([1, 8, 6, 2, 5, 4, 8, 3, 7]));
+  var threeSum = function(nums) {
+    
+  };
+      console.log(maxArea([-1,0,1,2,-1,-4]));
     </script>
   </body>
 </html>
