@@ -27,12 +27,20 @@
  var lengthOfLongestSubstring = function(s) {
     let max="";
     let start=0;
-    let next=1;
+    let next=0;
+let str= s[start];
+    for(next=start+1;next<s.length;next++){
+      
 
-    for(start;start<s.length;){
+      if(!str.includes(s[next])){str+s[next]}
+      else{
+        max= max.length > str.length? max : str;
+        str="";
+        start++;
+      }
       
     }
-
+return max;
 
   };
       console.log(lengthOfLongestSubstring("abcabcbb"));
