@@ -24,26 +24,18 @@
   <body>
     <div id="a"></div>
     <script>
- var lengthOfLongestSubstring = function(s) {
-    let max="";
-    let start=0;
-    let next=0;
-let str= s[start];
-    for(next=start+1;next<s.length;next++){
-      
+var areOccurrencesEqual = function(s) {
 
-      if(!str.includes(s[next])){str+s[next]}
-      else{
-        max= max.length > str.length? max : str;
-        str="";
-        start++;
-      }
-      
-    }
-return max;
+  let myMap= new Map();
 
-  };
-      console.log(lengthOfLongestSubstring("abcabcbb"));
+  for(let char of s){
+    myMap.set(char, (myMap.get(char) || 0)+1);
+  }
+  
+  return [... new Set(Array.from(myMap.values()))].length ===1;
+};
+
+      console.log(areOccurrencesEqual("aaabb"));
     </script>
   </body>
 </html>
