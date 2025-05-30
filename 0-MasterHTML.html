@@ -32,7 +32,8 @@ var areOccurrencesEqual = function(s) {
     myMap.set(char, (myMap.get(char) || 0)+1);
   }
   
-  return [... new Set(Array.from(myMap.values()))].length ===1;
+  const values = Array.from(myMap.values());
+  return values.every(val => val == values[0]);
 };
 
       console.log(areOccurrencesEqual("aaabb"));
