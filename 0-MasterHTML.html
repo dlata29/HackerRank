@@ -24,17 +24,17 @@
   <body>
     <div id="a"></div>
     <script>
-var areOccurrencesEqual = function(s) {
+var romanToInt = function(s) {
+       const romanMap = {
+        'I': 1, 'V': 5, 'X': 10, 'L': 50,
+        'C': 100, 'D': 500, 'M': 1000
+    };
 
-  let myMap= new Map();
+    let total = 0;
 
-  for(let char of s){
-    myMap.set(char, (myMap.get(char) || 0)+1);
-  }
-  
-  const values = Array.from(myMap.values());
-  return values.every(val => val == values[0]);
-};
+   
+    return total;
+}
 
       console.log(areOccurrencesEqual("abababa"));
     </script>
