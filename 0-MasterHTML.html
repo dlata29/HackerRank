@@ -1,32 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-      }
-      #a {
-        background-color: coral;
-        padding: 20px;
-        min-height: 100vh;
-      }
-      .item {
-        background-color: white;
-        margin: 10px 0;
-        padding: 10px;
-        border: 1px solid black;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="a"></div>
-    <script>
-      class House {
-        constructor(room, spcae) {}
-      }
-    </script>
-  </body>
+ <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <style>
+   body {
+    font-family: Arial, sans-serif;
+   }
+   #a {
+    background-color: coral;
+    padding: 20px;
+    min-height: 100vh;
+   }
+   .item {
+    background-color: white;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid black;
+   }
+  </style>
+ </head>
+ <body>
+  <div id="a"></div>
+  <script>
+   class House {
+    constructor(room, space) {
+     this.room = room;
+     this.space = space;
+    }
+
+    bedroom() {
+     console.log(`Bedroom details - Room name = ${this.room} and rom space = ${this.space}`);
+    }
+   }
+
+   class Ever extends House {
+    constructor(society, room, space) {
+     super(room, space);
+
+     this.society = society;
+    }
+
+    askSoc() {
+     console.log(
+      `Society anme = ${society} Bedroom details - Room name = ${this.room} and rom space = ${this.space}`
+     );
+    }
+   }
+   const r1 = new Ever("Ever");
+   r1.askSoc("toilet", "10");
+  </script>
+ </body>
 </html>
