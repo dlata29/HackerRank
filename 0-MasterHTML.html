@@ -26,10 +26,18 @@
   <script>
    var getLucky = function (s, k) {
     let arr = [];
+    let sa = "";
     for (let i = 0; i < s.length; i++) {
-     arr.push(s.charCode(i));
+     sa += Number(s.charCodeAt(i) - 96);
     }
-    return arr;
+
+    while (k > 0) {
+     arr = String(sa).split("");
+     sa = arr.reduce((acc, curr) => acc + Number(curr), 0);
+
+     k--;
+    }
+    return sa;
    };
    console.log(getLucky("zbax", "2"));
   </script>
