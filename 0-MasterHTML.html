@@ -24,8 +24,10 @@
  <body>
   <div id="a"></div>
   <script>
-   var strStr = function (haystack, needle) {};
-   console.log(strStr("()[]{}"));
+   var strStr = function (haystack, needle) {
+    return haystack.indexOf(needle);
+   };
+   console.log(strStr("sadbutsad", "sad"));
   </script>
  </body>
 </html>
