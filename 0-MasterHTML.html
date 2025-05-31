@@ -24,34 +24,8 @@
  <body>
   <div id="a"></div>
   <script>
-   class House {
-    constructor(room, space) {
-     this.room = room;
-     this.space = space;
-    }
-
-    bedroom() {
-     console.log(`Bedroom details - Room name = ${this.room} and rom space = ${this.space}`);
-    }
-   }
-
-   class Ever extends House {
-    constructor(society, room, space) {
-     super(room, space);
-
-     this.society = society;
-    }
-
-    askSoc() {
-     super.bedroom();
-     console.log(
-      `Society anme = ${this.society} Bedroom details - Room name = ${this.room} and rom space = ${this.space}`
-     );
-    }
-   }
-   const r1 = new Ever("Ever", "toilet", "10");
-   r1.askSoc();
-   console.log(Object.getPrototypeOf(r1));
+   var strStr = function (haystack, needle) {};
+   console.log(strStr("()[]{}"));
   </script>
  </body>
 </html>
