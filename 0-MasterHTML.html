@@ -24,10 +24,14 @@
  <body>
   <div id="a"></div>
   <script>
-   var strStr = function (haystack, needle) {
-    return haystack.indexOf(needle);
+   var getLucky = function (s, k) {
+    let arr = [];
+    for (let i = 0; i < s.length; i++) {
+     arr.push(s.charCode(i));
+    }
+    return arr;
    };
-   console.log(strStr("sadbutsad", "sad"));
+   console.log(getLucky("zbax", "2"));
   </script>
  </body>
 </html>
