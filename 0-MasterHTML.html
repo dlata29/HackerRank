@@ -24,28 +24,13 @@
   <body>
     <div id="a"></div>
     <script>
-      var isValid = function (str) {
-        const stack = [];
-        const bracketMap = {
-          "(": ")",
-          "{": "}",
-          "[": "]",
-        };
+      var a = 20;
+      let b = 10;
+      const c = 20;
 
-        for (i = 0; i < str.length; i++) {
-          if (bracketMap[str[i]]) {
-            stack.push(str[i]);
-          } else if (
-            bracketMap[str[i]] === bracketMap[stack[stack.length - 1]]
-          ) {
-            stack.pop();
-          }
-        }
-
-        return stack.length === 0;
-      };
-
-      console.log(isValid("()[]{}"));
+      console.log(window.a);
+      console.log(window.b);
+      console.log(window.c);
     </script>
   </body>
 </html>
