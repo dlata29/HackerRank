@@ -43,13 +43,15 @@
     }
 
     askSoc() {
+     super.bedroom();
      console.log(
-      `Society anme = ${society} Bedroom details - Room name = ${this.room} and rom space = ${this.space}`
+      `Society anme = ${this.society} Bedroom details - Room name = ${this.room} and rom space = ${this.space}`
      );
     }
    }
-   const r1 = new Ever("Ever");
-   r1.askSoc("toilet", "10");
+   const r1 = new Ever("Ever", "toilet", "10");
+   r1.askSoc();
+   console.log(Object.getPrototypeOf(r1));
   </script>
  </body>
 </html>
