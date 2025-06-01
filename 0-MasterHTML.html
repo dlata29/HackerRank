@@ -21,20 +21,20 @@
    }
   </style>
  </head>
- <body>
+ <body
   <div id="a"></div>
   <script>
    var minTimeToType = function (word) {
     let count = 0;
     let curr = 1;
     for (i = 0; i < word.length; i++) {
-     let tempCurr = word.charCodeAt(i) - 26;
+     let tempCurr = word.charCodeAt(i) - 96;
      if (tempCurr > curr / 2) {
-      let sum = Math.abs(tempCurr - curr - 26);
+      let sum = Math.abs(tempCurr - curr - 96);
       count += sum + 1;
       curr = tempCurr;
      } else {
-      let sum = curr - 26 + tempCurr;
+      let sum = curr - 96 + tempCurr;
       count += sum + 1;
       curr = tempCurr;
      }
