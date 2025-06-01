@@ -24,22 +24,24 @@
  <body>
   <div id="a"></div>
   <script>
-   var getLucky = function (s, k) {
-    let arr = [];
-    let sa = "";
-    for (let i = 0; i < s.length; i++) {
-     sa += Number(s.charCodeAt(i) - 96);
+   var minTimeToType = function (word) {
+    let count = 0;
+    let curr = 1;
+    for (i = 0; i < word.length; i++) {
+     let tempCurr = word.charCodeAt(i) - 26;
+     if (tempCurr > curr / 2) {
+      let sum = Math.abs(tempCurr - curr - 26);
+      count += sum + 1;
+      curr = tempCurr;
+     } else {
+      let sum = curr - 26 + tempCurr;
+      count += sum + 1;
+      curr = tempCurr;
+     }
     }
-
-    while (k > 0) {
-     arr = String(sa).split("");
-     sa = arr.reduce((acc, curr) => acc + Number(curr), 0);
-
-     k--;
-    }
-    return sa;
+    return count;
    };
-   console.log(getLucky("zbax", "2"));
+   console.log(minTimeToType("bza"));
   </script>
  </body>
 </html>
