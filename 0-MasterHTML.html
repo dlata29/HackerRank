@@ -25,23 +25,17 @@
   <div id="a"></div>
   <script>
    var minTimeToType = function (word) {
-    let count = 0;
-    let curr = 1;
-    for (i = 0; i < word.length; i++) {
-     let tempCurr = word.charCodeAt(i) - 96;
-     if (tempCurr > curr / 2) {
-      let sum = Math.abs(tempCurr - curr - 96);
-      count += sum + 1;
-      curr = tempCurr;
-     } else {
-      let sum = curr - 96 + tempCurr;
-      count += sum + 1;
-      curr = tempCurr;
-     }
+    let time = 0;
+    let curr = 'a'.charCodeAt(0);
+
+    for(i=0;i<word.length;i++){
+      let present= word.charCodeAt(i);
+      let distance = Math.abs(present-curr)
+      time += Math.min(distance, 26-distance)+1;
     }
-    return count;
+    return time;
    };
-   console.log(minTimeToType("bza"));
+   console.log(minTimeToType("azb"));
   </script>
  </body>
 </html>
