@@ -21,30 +21,13 @@
    }
   </style>
  </head>
- <body
+ <body>
   <div id="a"></div>
+
   <script>
-var convertToTitle = function(columnNumber) {
-  
-  let result= [];
-  let i=0;
-  while(columnNumber>0){
-    let newNum = (columnNumber-1);
-    columnNumber = Math.floor(newNum /26);
-    let rem= newNum%26;
-    result.push(rem)
-  }
-  
-  let finalResult="";
+   var isIsomorphic = function (s, t) {};
 
-  result.reverse().forEach(val =>  finalResult += String.fromCharCode(val+65));
-
-  return finalResult;
-    
-};
-
-
-   console.log(convertToTitle(28));
+   console.log(isIsomorphic("egg", "1"));
   </script>
  </body>
 </html>
