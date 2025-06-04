@@ -1,42 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
- <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
-  <style>
-   body {
-    font-family: Arial, sans-serif;
-   }
-   #a {
-    background-color: coral;
-    padding: 20px;
-    min-height: 100vh;
-   }
-   .item {
-    background-color: white;
-    margin: 10px 0;
-    padding: 10px;
-    border: 1px solid black;
-   }
-  </style>
- </head>
- <body>
-  <div id="a"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      #a {
+        background-color: coral;
+        padding: 20px;
+        min-height: 100vh;
+      }
 
-  <script>
-   var isIsomorphic = function (s, t) {
-    if (s.length !== t.length) return false;
+      #op {
+        background-color: rgb(65, 67, 67);
+        height: 2vh;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="a">
+      <input id="ip" type="" text />
 
-    for (i = 0; i < t.length; i++) {
-     const charToReplace = t[i];
-     const regex = new RegExp(charToReplace, "g");
-     s = s.replace(regex, charToReplace);
-    }
-    console.log(s);
-   };
-
-   console.log(isIsomorphic("foo", "bar"));
-  </script>
- </body>
+      <div id="op"></div>
+    </div>
+  </body>
 </html>
