@@ -25,19 +25,26 @@
   <div id="a"></div>
   <script>
 var convertToTitle = function(columnNumber) {
-  let num= columnNumber.split("").length;
-  let result=0;
-  let curr=0;
-  for(i=num;i>0;i--){
-    result += (columnNumber.charCodeAt(curr) - 64)*(columnNumber.charCodeAt(curr) - 64);
-    curr++;
+  
+  let result= [];
+  let i=0;
+  while(columnNumber>0){
+    let newNum = (columnNumber-1);
+    columnNumber = Math.floor(newNum /26);
+    let rem= newNum%26;
+    result.push(rem)
   }
-  return result;
+  
+  let finalResult="";
+
+  result.reverse().forEach(val =>  finalResult += String.fromCharCode(val+65));
+
+  return finalResult;
     
 };
 
 
-   console.log(convertToTitle("ZY"));
+   console.log(convertToTitle(28));
   </script>
  </body>
 </html>
