@@ -24,10 +24,14 @@
  <body
   <div id="a"></div>
   <script>
-var addBinary = function(a, b) {
-    return (parseInt(a,2)+parseInt(b,2)).toString(2);
-};
-   console.log(addBinary("11","1"));
+var isPalindrome = function(s) {
+  let sen = s.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+
+  return sen.split("").join("") == sen.split("").reverse().join("");
+}
+
+
+   console.log(isPalindrome("race a car"));
   </script>
  </body>
 </html>
