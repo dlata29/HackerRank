@@ -24,14 +24,20 @@
  <body
   <div id="a"></div>
   <script>
-var isPalindrome = function(s) {
-  let sen = s.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+var convertToTitle = function(columnNumber) {
+  let num= columnNumber.split("").length;
+  let result=0;
+  let curr=0;
+  for(i=num;i>0;i--){
+    result += (columnNumber.charCodeAt(curr) - 64)*(columnNumber.charCodeAt(curr) - 64);
+    curr++;
+  }
+  return result;
+    
+};
 
-  return sen.split("").join("") == sen.split("").reverse().join("");
-}
 
-
-   console.log(isPalindrome("race a car"));
+   console.log(convertToTitle("ZY"));
   </script>
  </body>
 </html>
