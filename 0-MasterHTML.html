@@ -25,9 +25,18 @@
   <div id="a"></div>
 
   <script>
-   var isIsomorphic = function (s, t) {};
+   var isIsomorphic = function (s, t) {
+    if (s.length !== t.length) return false;
 
-   console.log(isIsomorphic("egg", "1"));
+    for (i = 0; i < t.length; i++) {
+     const charToReplace = t[i];
+     const regex = new RegExp(charToReplace, "g");
+     s = s.replace(regex, charToReplace);
+    }
+    console.log(s);
+   };
+
+   console.log(isIsomorphic("foo", "bar"));
   </script>
  </body>
 </html>
