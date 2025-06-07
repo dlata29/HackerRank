@@ -6,19 +6,56 @@
     <title>Pure CSS Accordion</title>
     <style></style>
   </head>
+  <style>
+    .main {
+      width: 100%;
+      max-width: 600px;
+      margin: 40px auto;
+      background-color: aliceblue;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .section {
+      border-bottom: 1px solid grey;
+      padding: 20px;
+      box-sizing: border-box;
+      border-radius: 2px;
+    }
+    .label {
+      padding: 15px 20px;
+      font-weight: bold;
+      cursor: pointer;
+      background-color: #d4bdbd;
+      box-sizing: border-box;
+    }
+
+    .content {
+      padding: 0 20px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .accordion-content.open {
+      padding: 15px 20px;
+      max-height: 200px;
+    }
+  </style>
   <body>
     <div class="main">
       <div class="section">
-        <div class="label"></div>
-        <div class="content"></div>
+        <div class="label">sec 1</div>
+        <div class="content">content 1</div>
       </div>
       <div class="section">
-        <div class="label"></div>
-        <div class="content"></div>
+        <div class="label">sec 1</div>
+        <div class="content">content 2</div>
       </div>
       <div class="section">
-        <div class="label"></div>
-        <div class="content"></div>
+        <div class="label">sec 1</div>
+        <div class="content">content 3</div>
       </div>
     </div>
   </body>
