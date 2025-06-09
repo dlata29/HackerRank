@@ -3,90 +3,47 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Modal Popup</title>
+    <title>Stop Watch, Timer</title>
 
     <!-- 🔧 Optimization: Preload modal icon -->
     <link rel="preload" as="image" href="close-icon.png" />
 
     <style>
-      /* 🎨 Basic Styling */
       body {
         margin: 0;
         padding: 0;
-        height: 100vh;
-        font-family: system-ui, sans-serif;
+        box-sizing: border-box;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
         display: flex;
         justify-content: center;
         align-items: center;
       }
-      .backdrop {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(0, 0, 0, 0.5);
-        display: none;
-        justify-content: center;
+      .container {
+        display: flex;
         align-items: center;
-        z-index: 1000;
+        justify-content: center;
+        flex-direction: column;
+        gap: 20px;
       }
-      #modalBackdrop {
-        background: white;
-        padding: 30px;
-        border-radius: 8px;
-        max-width: 400px;
-        width: 80%;
-        position: fixed;
-        background: rgba(0, 0, 0, 0.4); /* semi-transparent overlay */
-        display: none; /* hidden by default */
+
+      .watch {
+        width: 400px;
+        border: 1px solid red;
       }
-      .close-btn {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background: crimson;
-        color: white;
-        border: none;
-        border-radius: 50%;
-        width: 25px;
-        height: 25px;
-        cursor: pointer;
-        font-weight: bold;
-      }
-      .show {
-        display: flex !important;
+      .start {
+        width: 200px;
+        background-color: aliceblue;
+        border: 1px solid blue;
       }
     </style>
+    <script src="MasterJS.js"></script>
   </head>
   <body>
-    <button class="open-btn">Open Modal</button>
-
-    <!-- 🔲 Modal & Backdrop -->
-    <div class="backdrop" id="modalBackdrop">
-      <div class="modal">
-        <button class="close-btn">&times;</button>
-        <h2>Modal Title</h2>
-        <p>This is a centered modal popup with a backdrop.</p>
-      </div>
+    <div class="container">
+      <div class="watch">0</div>
+      <div class="start">Start</div>
     </div>
 
-    <script>
-      const openBtn = document.querySelector(".open-btn");
-      const backdrop = document.getElementById("modalBackdrop");
-      const closeBtn = document.querySelector(".close-btn");
-
-      openBtn.addEventListener("click", function () {
-        backdrop.classList.add("show");
-      });
-
-      closeBtn.addEventListener("click", () => {
-        backdrop.classList.remove("show");
-      });
-
-      closeBtn.addEventListener("click", () => {
-        openBtn.classList.remove("show");
-      });
-    </script>
+    <div class="textTime"></div>
   </body>
 </html>
