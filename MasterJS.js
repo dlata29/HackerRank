@@ -1,15 +1,14 @@
-const headers = document.querySelectorAll(".label");
+const tabs = document.querySelectorAll(".subTab");
+const contents = document.querySelectorAll(".contentBox");
 
-headers.forEach((header) => {
-  header.addEventListener("click", () => {
-    const content = header.nextElementSibling;
+tabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    // Remove all active styles and hide all contents
+    tabs.forEach((t) => t.classList.remove("activeHeader"));
+    contents.forEach((c) => (c.style.display = "none"));
 
-    document.querySelectorAll(".content").forEach((c) => {
-      if (c !== content) {
-        c.classList.remove("open");
-      }
-    });
-
-    content.classList.toggle("open");
+    // Add active styles to clicked tab and show its content
+    tab.classList.add("activeHeader");
+    document.getElementById(tab.dataset.content).style.display = "block";
   });
 });
