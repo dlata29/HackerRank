@@ -3,47 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Stop Watch, Timer</title>
-
-    <!-- 🔧 Optimization: Preload modal icon -->
-    <link rel="preload" as="image" href="close-icon.png" />
-
+    <title>Stopwatch</title>
     <style>
-      body {
-        margin: 0;
-        padding: 0;
+      * {
         box-sizing: border-box;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      .container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        gap: 20px;
       }
 
-      .watch {
-        width: 400px;
-        border: 1px solid red;
+      body {
+        font-family: system-ui, sans-serif;
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f0f0f0;
       }
-      .start {
-        width: 200px;
-        background-color: aliceblue;
-        border: 1px solid blue;
+
+      .ip {
+        border-radius: 20px;
+        font-size: 14px;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        padding: 15px;
       }
     </style>
-    <script src="MasterJS.js"></script>
   </head>
   <body>
     <div class="container">
-      <div class="watch">0</div>
-      <div class="start">Start</div>
+      <input type="text" class="ip" placeholder="enter todo here" />
     </div>
 
-    <div class="textTime"></div>
+    <div class="op"></div>
+
+    <script src="MasterJS.js"></script>
   </body>
 </html>
