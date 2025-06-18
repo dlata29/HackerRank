@@ -1,49 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Users <3</title>
-  </head>
+<body>
+  <div class="main">
+    <h1>Users</h1>
+    <div class="container"></div>
+  </div>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+  <script>
+    const url = "https://dummyjson.com/users";
+
+    async function loadResults() {
+      try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          throw new Error("Error fetching data");
+        }
+
+        const data = await response.json();
+        const container = document.querySelector(".container");
+
+        for (let i = 0; i < data.users.length; i++) {
+          const user = data.users[i];
+
+          const item = document.createElement("div");
+          item.classList.add("item", "col-md-1", "col-sm-1");
+          item.innerHTML = user.firstName;
+
+          container.appendChild(item);
+        }
+      } catch (error) {
+        console.log("error", error);
+      }
     }
 
-    body {
-      width: 100%;
-      font-family: Verdana, Geneva, Tahoma, sans-serif;
-      background-color: #f8f9fa;
-      padding: 20px;
-    }
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      text-align: center;
-    }
-    .row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-    .card {
-      padding: 10px;
-      margin: 20px;
-      background-color: aliceblue;
-      flex: 1;
-      padding: 10px;
-      border: 1px solid #ccc;
-    }
-  </style>
-  <body>
-    <div class="container">
-      <h1>Users</h1>
-
-      <div id="ans"></div>
-    </div>
-    <script src="MasterJS.js"></script>
-  </body>
-</html>
+    document.addEventListener("DOMContentLoaded", () => loadResults());
+  </script>
+</body>
