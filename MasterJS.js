@@ -1,44 +1,34 @@
-async function loadVals() {
-  try {
-    const url = "https://jsonplaceholder.typicode.com/users";
+const container = document.getElementById("userContainer");
+const url = "https://jsonplaceholder.typicode.com/users";
 
+async function loadUsers() {
+  try {
     const response = await fetch(url);
 
     if (!response.ok) {
-      console.log("error in fetch");
-      throw new Error(`HTTPS status : ${response.status}`);
+      throw new Error("threw error");
     }
 
     const data = await response.json();
-    const container = document.getElementById("ans");
-    data.forEach((item) => {
-      // show 9 items total = 3 rows
+
+    console.log(data);
+    for (i = 0; i < data.length; i++) {
+      const user = data[i];
+
+      const cardWrapper = document.createElement("div");
+      cardWrapper.className = "col-md-6 mb-4";
+
       const card = document.createElement("div");
-      card.className = "card";
-      card.textContent = item.name;
-      container.appendChild(card);
-    });
-    // const data = await response.json();
+      card.className = "card p-3 shadow-sm text-center";
+      card.textContent = user.name;
 
-    // const container = document.getElementById("ans");
-
-    // for (i = 0; i < data.length; i++) {
-    //   if (i % 3 === 0) {
-    //     var row = document.createElement("div");
-    //     row.className = "row";
-    //     container.appendChild(row);
-    //   }
-
-    //   const card = document.createElement("div");
-    //   card.className = "card";
-    //   card.textContent = data[i].name;
-    //   row.appendChild(card);
-    // }
-  } catch (error) {
-    console.log("error in main", error);
+      cardWrapper.appendChild(card);
+      container.appendChild(cardWrapper);
+    }
+  } catch (err) {
+    container.innerHTML = "<p class='text-danger'>Error loading users.</p>";
+    console.error(err);
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  loadVals();
-});
+document.addEventListener("DOMContentLoaded", loadUsers);
