@@ -16,18 +16,33 @@
     body {
       width: 100%;
       font-family: Verdana, Geneva, Tahoma, sans-serif;
+      background-color: #f8f9fa;
+      padding: 20px;
     }
     .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .row {
       display: flex;
-      justify-content: center;
-      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .card {
+      padding: 10px;
+      margin: 20px;
+      background-color: aliceblue;
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
     }
   </style>
   <body>
     <div class="container">
       <h1>Users</h1>
 
-      <div class="ans"></div>
+      <div id="ans"></div>
     </div>
     <script src="MasterJS.js"></script>
   </body>

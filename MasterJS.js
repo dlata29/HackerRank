@@ -10,21 +10,19 @@ async function loadVals() {
     }
 
     const data = await response.json();
-    console.log(data.length);
-    let len = data.length;
 
-    const container = document.getElementById("container");
+    const container = document.getElementById("ans");
 
     for (i = 0; i < data.length; i++) {
-      if (i % 3 == 0) {
+      if (i % 3 === 0) {
         var row = document.createElement("div");
-        row.className("newRow");
+        row.className = "row";
         container.appendChild(row);
       }
 
       const card = document.createElement("div");
-      card.className = "ele";
-      card.textContent = data.title;
+      card.className = "card";
+      card.textContent = data[i].name;
       row.appendChild(card);
     }
   } catch (error) {
