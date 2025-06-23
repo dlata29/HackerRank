@@ -3,78 +3,99 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>color switcher</title>
+    <title>Sortable & Filterable Data Table</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      input[type="text"] {
+        padding: 10px;
+        min-width: 200px;
+      }
+    </style>
   </head>
-  <style>
-    :root {
-      --bg-color: #d0d0ce;
-      --text-color: #000000;
-      --accent-color: #007bff;
-    }
-    .darkTheme {
-      --bg-color: #000;
-      --text-color: #fff;
-      --accent-color: #cf7b57;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      padding: 20px;
-      font-family: sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      transition: background 0.3s, color 0.3s;
-    }
-
-    .main {
-      padding: 20px;
-    }
-
-    .tg {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .para {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 10px;
-      width: 50%;
-    }
-
-    button {
-      background-color: var(--accent-color);
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      margin-top: 20px;
-      cursor: pointer;
-    }
-  </style>
   <body>
-    <div class="main">
-      <div class="tg"><button class="btn" onclick="toggleTheme()">Toggle Theme</button></div>
-      <div class="=para">
-        <p>
-          A habit tracker is a powerful tool for anyone looking to build new habits, break old ones,
-          or simply become more aware of their daily routines. It's essentially a visual record of
-          whether you've performed a specific action on a given day.
-        </p>
-      </div>
-    </div>
+    <h2>Employee Directory</h2>
+    <input type="text" id="searchInput" placeholder="Search by name or department..." />
+
+    <table id="dataTable">
+      <thead>
+        <tr>
+          <th data-column="name">Name</th>
+          <th data-column="department">Department</th>
+          <th data-column="age">Age</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Alice Johnson</td>
+          <td>Marketing</td>
+          <td>29</td>
+        </tr>
+        <tr>
+          <td>Bob Smith</td>
+          <td>Sales</td>
+          <td>35</td>
+        </tr>
+        <tr>
+          <td>Claire Adams</td>
+          <td>HR</td>
+          <td>32</td>
+        </tr>
+        <tr>
+          <td>David Miller</td>
+          <td>Engineering</td>
+          <td>41</td>
+        </tr>
+        <tr>
+          <td>Emily Davis</td>
+          <td>Finance</td>
+          <td>27</td>
+        </tr>
+      </tbody>
+    </table>
 
     <script>
-      function toggleTheme() {
-        document.body.classList.toggle("darkTheme");
-      }
+      const searchInput = document.getElementById("searchInput");
+      const table = document.getElementById("dataTable");
+      const tbody = table.querySelector("tbody");
+      let rows = Array.from(tbody.querySelectorAll("tr"));
+
+      // Filter logic
+      searchInput.addEventListener("input", () => {
+        const search = searchInput.value.toLowerCase();
+        rows.forEach((row) => {
+          const cells = row.querySelectorAll("td");
+          const match = Array.from(cells).some((td) =>
+            td.textContent.toLowerCase().includes(search)
+          );
+          row.style.display = match ? "" : "none";
+        });
+      });
+
+      // Sort logic
+      let sortDirection = true; // true = ascending
+      table.querySelectorAll("th").forEach((th, index) => {
+        th.addEventListener("click", () => {
+          rows.sort((a, b) => {
+            const cellA = a.children[index].textContent.trim().toLowerCase();
+            const cellB = b.children[index].textContent.trim().toLowerCase();
+            return sortDirection
+              ? cellA.localeCompare(cellB, undefined, { numeric: true })
+              : cellB.localeCompare(cellA, undefined, { numeric: true });
+          });
+          sortDirection = !sortDirection;
+          tbody.innerHTML = "";
+          rows.forEach((row) => tbody.appendChild(row));
+        });
+      });
     </script>
   </body>
 </html>
