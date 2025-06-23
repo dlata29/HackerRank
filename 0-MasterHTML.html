@@ -6,17 +6,44 @@
     <title>Document</title>
   </head>
   <style>
+    body {
+      text-align: center;
+      background-color: antiquewhite;
+    }
     .container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      display: inline-block;
+      padding: 20px;
+      background-color: lightgray;
+      font-size: 24px;
+      border-radius: 8px;
     }
   </style>
   <body>
-    <div class="container"></div>
+    <div class="container">Hello</div>
 
     <script>
-      var isIsomorphic = function (s, t) {};
+      var isIsomorphic = function (s, t) {
+        const mapST = {}; // maps s → t
+        const mapTS = {}; // map t->s
+        for (let i = 0; i < s.length; i++) {
+          const charS = s[i];
+          const charT = t[i];
+
+          if (
+            (mapST[charS] && mapST[charS] !== charT) ||
+            (mapTS[charT] && mapTS[charT] !== charS)
+          ) {
+            return false;
+          }
+
+          mapST[charS] = charT;
+          mapTS[charT] = charS;
+        }
+        return true;
+      };
+
+      const dv = document.querySelector(".container");
+      dv.textContent = isIsomorphic("egg", "add");
     </script>
   </body>
 </html>
