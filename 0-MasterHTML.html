@@ -3,18 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard</title>
+    <title>Weather Dashboard</title>
     <style>
-      :root {
-        --card-bg: #ffffff;
-        --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        --grid-gap: 20px;
-      }
-
       body {
-        margin: 0;
         font-family: Arial, sans-serif;
-        background-color: #f2f4f8;
+        background: #f2f2f2;
+        margin: 0;
         padding: 20px;
       }
 
@@ -26,19 +20,14 @@
       .dashboard {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: var(--grid-gap);
+        gap: 20px;
       }
 
       .card {
-        background: var(--card-bg);
-        box-shadow: var(--card-shadow);
-        border-radius: 10px;
+        background: white;
         padding: 20px;
-        transition: transform 0.3s;
-      }
-
-      .card:hover {
-        transform: scale(1.02);
+        border-radius: 10px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
       }
 
       .card h2 {
@@ -52,39 +41,43 @@
     </style>
   </head>
   <body>
-    <h1>My Dashboard</h1>
+    <h1>Weather Dashboard</h1>
     <div class="dashboard">
       <div class="card" id="weatherCard">
-        <h2>Weather</h2>
-        <p>Location: <span id="city">Bangalore</span></p>
+        <p>🌡️ City: <span id="city">--</span></p>
         <p class="stat">🌡️ Temp: <span id="temp">--</span>°C</p>
-      </div>
-      <div class="card" id="githubCard">
-        <h2>GitHub Stats</h2>
-        <p>User: <span id="gh-user">divyalata</span></p>
-        <p class="stat">⭐ Followers: <span id="followers">--</span></p>
       </div>
     </div>
 
     <script>
-      // Mocked data (replace with real API fetch later)
-      const weatherData = {
-        city: "Bangalore",
-        temperature: 29,
-      };
+      const apiKey = "548d4a21b245eca2609db23ef1c198f8"; // Replace this with your real API key
+      const cityName = ["Delhi", "Bengaluru", "Mumbai"];
 
-      const githubData = {
-        username: "divyalata",
-        followers: 42,
-      };
+      async function fetchWeather() {
+        try {
+          for (const city of cityName) {
+            const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+            const response = await fetch(url);
+            const data = await response.json();
+            console.log(data);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
 
-      // Set Weather Data
-      document.getElementById("city").textContent = weatherData.city;
-      document.getElementById("temp").textContent = weatherData.temperature;
-
-      // Set GitHub Stats
-      document.getElementById("gh-user").textContent = githubData.username;
-      document.getElementById("followers").textContent = githubData.followers;
+      fetchWeather();
     </script>
   </body>
 </html>
+
+<!-- console.log(url);
+          const response = await fetch(url);
+          const data = await response.json();
+          console.log(data);
+
+          const city = document.getElementById("city");
+          const temp = document.getElementById("temp");
+
+          city.innerText = data.name;
+          temp.innerText = data.main.temp; -->
