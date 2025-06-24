@@ -3,47 +3,88 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Dashboard</title>
+    <style>
+      :root {
+        --card-bg: #ffffff;
+        --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        --grid-gap: 20px;
+      }
+
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f2f4f8;
+        padding: 20px;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .dashboard {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: var(--grid-gap);
+      }
+
+      .card {
+        background: var(--card-bg);
+        box-shadow: var(--card-shadow);
+        border-radius: 10px;
+        padding: 20px;
+        transition: transform 0.3s;
+      }
+
+      .card:hover {
+        transform: scale(1.02);
+      }
+
+      .card h2 {
+        margin-bottom: 10px;
+      }
+
+      .stat {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+    </style>
   </head>
-  <style>
-    body {
-      text-align: center;
-      background-color: antiquewhite;
-    }
-    .container {
-      display: inline-block;
-      padding: 20px;
-      background-color: lightgray;
-      font-size: 24px;
-      border-radius: 8px;
-    }
-  </style>
   <body>
-    <div class="container">Hello</div>
+    <h1>My Dashboard</h1>
+    <div class="dashboard">
+      <div class="card" id="weatherCard">
+        <h2>Weather</h2>
+        <p>Location: <span id="city">Bangalore</span></p>
+        <p class="stat">🌡️ Temp: <span id="temp">--</span>°C</p>
+      </div>
+      <div class="card" id="githubCard">
+        <h2>GitHub Stats</h2>
+        <p>User: <span id="gh-user">divyalata</span></p>
+        <p class="stat">⭐ Followers: <span id="followers">--</span></p>
+      </div>
+    </div>
 
     <script>
-      var isIsomorphic = function (s, t) {
-        const mapST = {}; // maps s → t
-        const mapTS = {}; // map t->s
-        for (let i = 0; i < s.length; i++) {
-          const charS = s[i];
-          const charT = t[i];
-
-          if (
-            (mapST[charS] && mapST[charS] !== charT) ||
-            (mapTS[charT] && mapTS[charT] !== charS)
-          ) {
-            return false;
-          }
-
-          mapST[charS] = charT;
-          mapTS[charT] = charS;
-        }
-        return true;
+      // Mocked data (replace with real API fetch later)
+      const weatherData = {
+        city: "Bangalore",
+        temperature: 29,
       };
 
-      const dv = document.querySelector(".container");
-      dv.textContent = isIsomorphic("egg", "add");
+      const githubData = {
+        username: "divyalata",
+        followers: 42,
+      };
+
+      // Set Weather Data
+      document.getElementById("city").textContent = weatherData.city;
+      document.getElementById("temp").textContent = weatherData.temperature;
+
+      // Set GitHub Stats
+      document.getElementById("gh-user").textContent = githubData.username;
+      document.getElementById("followers").textContent = githubData.followers;
     </script>
   </body>
 </html>
