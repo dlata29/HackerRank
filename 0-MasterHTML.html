@@ -15,6 +15,17 @@
       .input-area {
         margin-bottom: 20px;
       }
+
+      .input-area input,
+      button {
+        padding: 10px 20px;
+        border-radius: 5px solid #d0d0ce;
+      }
+
+      .repo-List {
+        background-color: #f4f4f4;
+        max-height: 100px;
+      }
     </style>
   </head>
   <body>
@@ -28,7 +39,25 @@
     <div class="repo-list" id="repoList"></div>
 
     <script>
-      async function getRepos() {}
+      async function getRepos() {
+        const username = "dlata29";
+        const url = "https://api.github.com/users/${username}/repos";
+
+        try {
+          fetch(url)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(`HTTPS status error : ${response.status}`);
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log(data);
+            });
+        } catch (error) {
+          console.log("Error caught", error);
+        }
+      }
     </script>
   </body>
 </html>
