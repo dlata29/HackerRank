@@ -2,82 +2,88 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Weather Dashboard</title>
+    <title>GitHub GraphQL Example</title>
     <style>
       body {
         font-family: Arial, sans-serif;
-        background: #f2f2f2;
-        margin: 0;
-        padding: 20px;
+        padding: 2rem;
       }
 
-      h1 {
-        text-align: center;
-        margin-bottom: 20px;
+      h2 {
+        margin-bottom: 1rem;
       }
 
-      .dashboard {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 20px;
+      .repo-list {
+        max-height: 300px;
+        overflow-y: auto;
+        border: 1px solid #ccc;
+        padding: 1rem;
       }
 
-      .card {
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+      .repo-card {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #eee;
       }
 
-      .card h2 {
-        margin-bottom: 10px;
-      }
-
-      .stat {
-        font-size: 1.5rem;
+      .repo-card a {
         font-weight: bold;
+        text-decoration: none;
+        color: #007bff;
+      }
+
+      .repo-card a:hover {
+        text-decoration: underline;
       }
     </style>
   </head>
   <body>
-    <h1>Weather Dashboard</h1>
-    <div class="dashboard">
-      <div class="card" id="weatherCard">
-        <p>🌡️ City: <span id="city">--</span></p>
-        <p class="stat">🌡️ Temp: <span id="temp">--</span>°C</p>
-      </div>
-    </div>
+    <h2>GitHub Repositories</h2>
+    <div class="repo-list" id="repoList"></div>
 
     <script>
-      const apiKey = "548d4a21b245eca2609db23ef1c198f8"; // Replace this with your real API key
-      const cityName = ["Delhi", "Bengaluru", "Mumbai"];
+      const GITHUB_TOKEN = "YOUR_GITHUB_TOKEN_HERE";
 
-      async function fetchWeather() {
-        try {
-          for (const city of cityName) {
-            const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
-            const response = await fetch(url);
-            const data = await response.json();
-            console.log(data);
+      const query = `
+      {
+        viewer {
+          name
+          repositories(first: 10, orderBy: {field: UPDATED_AT, direction: DESC}) {
+            nodes {
+              name
+              description
+              url
+              stargazerCount
+            }
           }
-        } catch (error) {
-          console.log(error);
         }
       }
+    `;
 
-      fetchWeather();
+      fetch("https://api.github.com/graphql", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${GITHUB_TOKEN}`,
+        },
+        body: JSON.stringify({ query }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          const repos = data.data.viewer.repositories.nodes;
+          const list = document.getElementById("repoList");
+
+          repos.forEach((repo) => {
+            const card = document.createElement("div");
+            card.className = "repo-card";
+            card.innerHTML = `
+            <a href="${repo.url}" target="_blank">${repo.name}</a>
+            <p>${repo.description || "No description"}</p>
+            ⭐ ${repo.stargazerCount}
+          `;
+            list.appendChild(card);
+          });
+        })
+        .catch((error) => console.error("Error fetching GitHub data:", error));
     </script>
   </body>
 </html>
-
-<!-- console.log(url);
-          const response = await fetch(url);
-          const data = await response.json();
-          console.log(data);
-
-          const city = document.getElementById("city");
-          const temp = document.getElementById("temp");
-
-          city.innerText = data.name;
-          temp.innerText = data.main.temp; -->
