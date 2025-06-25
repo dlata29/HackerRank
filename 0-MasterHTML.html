@@ -17,22 +17,45 @@
       }
 
       .input-area input,
-      button {
-        padding: 10px 20px;
-        border-radius: 5px solid #d0d0ce;
+      .input-area button {
+        padding: 10px 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin: 0 5px;
+        font-size: 16px;
       }
 
-      .repo-List {
-        background-color: #f4f4f4;
-        max-height: 100px;
+      .repo-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        max-height: 300px;
+        overflow-y: auto;
+        padding: 10px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 8px;
       }
 
       .newElement {
-        background-color: rgb(241, 245, 236);
+        background-color: #eef6f3;
         padding: 10px;
-        margin-bottom: 10px;
-        width: 25%;
+        width: 200px;
         border: 1px solid #d0d0ce;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        text-align: left;
+      }
+
+      .newElement p {
+        margin: 5px 0;
+      }
+
+      @media (max-width: 600px) {
+        .newElement {
+          width: 100%;
+        }
       }
     </style>
   </head>
@@ -48,34 +71,36 @@
 
     <script>
       async function getRepos() {
-        const username = "dlata29";
+        const username = document.getElementById("usernameInput").value.trim();
         const url = `https://api.github.com/users/${username}/repos`;
         const repoList = document.getElementById("repoList");
+        repoList.innerHTML = "Loading...";
 
         try {
-          await fetch(url)
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error(`HTTPS status error : ${response.status}`);
-              }
-              return response.json();
-            })
-            .then((data) => {
-              console.log(data);
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error(`HTTP status error: ${response.status}`);
+          }
 
-              data.forEach((element) => {
-                const newElement = document.createElement("div");
-                newElement.className = "newElement";
-                newElement.innerHTML = `
-              <p class="name">${element.name}</p>
-              <p class="fullname">${element.full_name}</p>
-              `;
+          const data = await response.json();
+          repoList.innerHTML = ""; // Clear old content
 
-                repoList.appendChild(newElement);
-              });
-            });
+          if (data.length === 0) {
+            repoList.innerHTML = "No public repos found.";
+            return;
+          }
+
+          data.forEach((element) => {
+            const newElement = document.createElement("div");
+            newElement.className = "newElement";
+            newElement.innerHTML = `
+              <p><strong>${element.name}</strong></p>
+              <p>${element.full_name}</p>
+            `;
+            repoList.appendChild(newElement);
+          });
         } catch (error) {
-          console.log("Error caught", error);
+          repoList.innerHTML = `Error: ${error.message}`;
         }
       }
     </script>
