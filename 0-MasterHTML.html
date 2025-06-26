@@ -2,106 +2,201 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GitHub Repo Fetcher</title>
+    <title>Notification Preview – Mock</title>
     <style>
+      :root {
+        --bg: #f4f6fa;
+        --card-bg: #fff;
+        --radius: 12px;
+        --border: 1px solid #e2e6ec;
+        --shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+        --primary: #007aff;
+        --subtitle: #6b7280;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: system-ui, Arial;
+      }
       body {
-        font-family: sans-serif;
-        padding: 20px;
-        background-color: #f4f4f4;
-        text-align: center;
-      }
-
-      .input-area {
-        margin-bottom: 20px;
-      }
-
-      .input-area input,
-      .input-area button {
-        padding: 10px 15px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        margin: 0 5px;
-        font-size: 16px;
-      }
-
-      .repo-list {
+        background: var(--bg);
+        padding: 30px;
         display: flex;
+        gap: 32px;
         flex-wrap: wrap;
-        gap: 10px;
-        justify-content: center;
-        max-height: 300px;
-        overflow-y: auto;
-        padding: 10px;
-        background-color: #fff;
-        border: 1px solid #ccc;
+      }
+      h2 {
+        font-size: 18px;
+        margin-bottom: 12px;
+        color: #111;
+      }
+      /* preview devices layout */
+      .device {
+        background: var(--card-bg);
+        border: var(--border);
+        border-radius: var(--radius);
+        width: 300px;
+        padding: 20px;
+        box-shadow: var(--shadow);
+      }
+      /* Android style */
+      .android-bar {
+        height: 24px;
+        background: #202124;
+        border-radius: 8px 8px 0 0;
+        margin-bottom: 12px;
+      }
+      .android-card {
+        background: #2b2b2b;
+        color: #fff;
+        padding: 14px;
         border-radius: 8px;
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
       }
-
-      .newElement {
-        background-color: #eef6f3;
-        padding: 10px;
-        width: 200px;
-        border: 1px solid #d0d0ce;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        text-align: left;
+      .android-card img {
+        width: 40px;
+        height: 40px;
+        border-radius: 4px;
       }
-
-      .newElement p {
-        margin: 5px 0;
+      .ac-body {
+        flex: 1;
       }
-
-      @media (max-width: 600px) {
-        .newElement {
-          width: 100%;
-        }
+      .ac-title {
+        font-weight: 600;
+      }
+      .ac-text {
+        font-size: 14px;
+        color: #d1d5db;
+        margin-top: 2px;
+      }
+      /* iOS style */
+      .iphone {
+        background: #000;
+        border-radius: 24px;
+        color: #fff;
+        padding: 16px;
+      }
+      .noti-ios {
+        background: #1e1e1e;
+        border-radius: 14px;
+        padding: 14px 12px;
+        display: flex;
+        gap: 10px;
+      }
+      .noti-ios img {
+        width: 38px;
+        height: 38px;
+        border-radius: 6px;
+      }
+      .ios-body {
+        flex: 1;
+      }
+      .ios-title {
+        font-size: 15px;
+        font-weight: 600;
+      }
+      .ios-text {
+        font-size: 13px;
+        color: #9ca3af;
+        margin-top: 2px;
+      }
+      /* form */
+      .panel {
+        flex: 1 1 300px;
+        background: var(--card-bg);
+        border: var(--border);
+        border-radius: var(--radius);
+        padding: 20px;
+        box-shadow: var(--shadow);
+        max-width: 380px;
+      }
+      label {
+        display: block;
+        font-size: 14px;
+        margin-top: 12px;
+        color: #374151;
+      }
+      input,
+      textarea {
+        width: 100%;
+        padding: 8px 10px;
+        border: var(--border);
+        border-radius: 6px;
+        font-size: 14px;
+        margin-top: 6px;
+      }
+      button {
+        margin-top: 18px;
+        background: var(--primary);
+        color: #fff;
+        border: 0;
+        padding: 10px 16px;
+        border-radius: 6px;
+        font-size: 14px;
+        cursor: pointer;
       }
     </style>
   </head>
   <body>
-    <h1>GitHub Repositories</h1>
-
-    <div class="input-area">
-      <input type="text" id="usernameInput" placeholder="Enter GitHub username" />
-      <button onclick="getRepos()">Get Repos</button>
+    <!-- configuration panel -->
+    <div class="panel">
+      <h2>Compose Notification</h2>
+      <label
+        >Title
+        <input id="titleIn" placeholder="Title" value="Weekly Update" />
+      </label>
+      <label
+        >Message
+        <textarea id="msgIn" rows="3" placeholder="Body text">
+Check out the new features we shipped this week!</textarea
+        >
+      </label>
+      <label
+        >Icon URL
+        <input id="iconIn" placeholder="https://…" value="https://placekitten.com/80" />
+      </label>
+      <button onclick="updatePreview()">Update Preview</button>
     </div>
 
-    <div class="repo-list" id="repoList"></div>
+    <!-- Android preview -->
+    <div class="device">
+      <h2>Android</h2>
+      <div class="android-bar"></div>
+      <div class="android-card">
+        <img id="aIcon" src="https://placekitten.com/80" alt="" />
+        <div class="ac-body">
+          <div class="ac-title" id="aTitle">Weekly Update</div>
+          <div class="ac-text" id="aText">Check out the new features we shipped this week!</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- iOS preview -->
+    <div class="device">
+      <h2>iOS</h2>
+      <div class="iphone">
+        <div class="noti-ios">
+          <img id="iIcon" src="https://placekitten.com/80" alt="" />
+          <div class="ios-body">
+            <div class="ios-title" id="iTitle">Weekly Update</div>
+            <div class="ios-text" id="iText">Check out the new features we shipped this week!</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script>
-      async function getRepos() {
-        const username = document.getElementById("usernameInput").value.trim();
-        const url = `https://api.github.com/users/${username}/repos`;
-        const repoList = document.getElementById("repoList");
-        repoList.innerHTML = "Loading...";
+      function updatePreview() {
+        const title = document.getElementById("titleIn").value.trim() || " ";
+        const msg = document.getElementById("msgIn").value.trim() || " ";
+        const icon = document.getElementById("iconIn").value.trim() || "";
 
-        try {
-          const response = await fetch(url);
-          if (!response.ok) {
-            throw new Error(`HTTP status error: ${response.status}`);
-          }
-
-          const data = await response.json();
-          repoList.innerHTML = ""; // Clear old content
-
-          if (data.length === 0) {
-            repoList.innerHTML = "No public repos found.";
-            return;
-          }
-
-          data.forEach((element) => {
-            const newElement = document.createElement("div");
-            newElement.className = "newElement";
-            newElement.innerHTML = `
-              <p><strong>${element.name}</strong></p>
-              <p>${element.full_name}</p>
-            `;
-            repoList.appendChild(newElement);
-          });
-        } catch (error) {
-          repoList.innerHTML = `Error: ${error.message}`;
-        }
+        ["aTitle", "iTitle"].forEach((id) => (document.getElementById(id).textContent = title));
+        ["aText", "iText"].forEach((id) => (document.getElementById(id).textContent = msg));
+        ["aIcon", "iIcon"].forEach((id) => (document.getElementById(id).src = icon));
       }
     </script>
   </body>
