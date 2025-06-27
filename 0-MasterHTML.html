@@ -17,7 +17,7 @@
 
       body {
         font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
         min-height: 100vh;
         overflow: hidden;
       }
@@ -30,7 +30,7 @@
 
       /* Left Panel Styles */
       .left-panel {
-        width: 400px;
+        width: 50%;
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(10px);
         padding: 2rem;
@@ -125,11 +125,12 @@
       /* Right Panel Styles */
       .right-panel {
         flex: 1;
+        width: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         padding: 2rem;
-        background: rgba(0, 0, 0, 0.1);
+        background: rgba(255, 255, 255, 0.3);
       }
 
       .phone-container {
@@ -140,9 +141,9 @@
       }
 
       .phone-frame {
-        width: 320px;
+        width: 380px;
         height: 100%;
-        max-height: 650px;
+        max-height: 780px;
         background: #1a1a1a;
         border-radius: 40px;
         padding: 8px;
@@ -320,12 +321,12 @@
       /* Responsive Design */
       @media (max-width: 1200px) {
         .left-panel {
-          width: 350px;
+          width: 50%;
           padding: 1.5rem;
         }
 
         .phone-frame {
-          width: 280px;
+          width: 340px;
         }
       }
 
@@ -343,13 +344,14 @@
         }
 
         .right-panel {
+          width: 100%;
           height: 50vh;
           padding: 1rem;
         }
 
         .phone-frame {
-          width: 250px;
-          height: 400px;
+          width: 300px;
+          height: 500px;
         }
       }
 
@@ -388,6 +390,7 @@
         background: #a8a8a8;
       }
     </style>
+    >
   </head>
   <body>
     <div class="container">
@@ -527,6 +530,6 @@ Thank you for downloading our app. We're excited to have you on board!</textarea
       </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="MasterJS.js"></script>
   </body>
 </html>
