@@ -29,30 +29,29 @@
   <body>
     <div class="container"></div>
     <script>
-      var wordPattern = function (p, s) {
-        let word = s.split(" ");
+      var reverseString = function (s) {
+        const len = s.length;
 
-        if (p.length !== word.length) return false;
+        for (i = 0; i < Math.floor(len / 2); i++) {
+          let left = s[i];
+          let temp = left;
+          let right = s[len - i - 1];
 
-        let p2s = new Map();
-        let s2p = new Map();
-
-        for (let i = 0; i < p.length; i++) {
-          let char = p[i];
-          let curWord = word[i];
-
-          if (p2s.has(char) && p2s.get(char) !== curWord) return false;
-          else p2s.set(char, curWord);
-
-          if (s2p.has(curWord) && s2p.get(curWord) !== char) return false;
-          else {
-            s2p.set(curWord, char);
-          }
+          s[i] = right;
+          s[len - i - 1] = left;
         }
-        return true;
+
+        return s;
       };
 
-      document.querySelector(".container").innerHTML = wordPattern("abba", "dog dog dog dog");
+      document.querySelector(".container").innerHTML = reverseString([
+        "H",
+        "a",
+        "n",
+        "n",
+        "a",
+        "h",
+      ]);
     </script>
   </body>
 </html>
