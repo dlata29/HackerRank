@@ -29,29 +29,22 @@
   <body>
     <div class="container"></div>
     <script>
-      var reverseString = function (s) {
-        const len = s.length;
+      var canConstruct = function (ransomNote, magazine) {
+        if (ransomNote.length > magazine.length) return false;
 
-        for (i = 0; i < Math.floor(len / 2); i++) {
-          let left = s[i];
-          let temp = left;
-          let right = s[len - i - 1];
+        let count = new Array(26).fill(0);
 
-          s[i] = right;
-          s[len - i - 1] = left;
+        for (let i = 0; i < magazine.length; i++) {
+          let charRansom = ransomNote[i].chatAt(0) - 97;
+          // let charMagazine = magazine.chatAt(i) - 97;
+
+          console.log(charRansom);
         }
-
-        return s;
       };
-
-      document.querySelector(".container").innerHTML = reverseString([
-        "H",
-        "a",
-        "n",
-        "n",
-        "a",
-        "h",
-      ]);
+      document.querySelector(".container").innerHTML = canConstruct(
+        "bg",
+        "efjbdfbdgfjhhaiigfhbaejahgfbbgbjagbddfgdiaigdadhcfcj"
+      );
     </script>
   </body>
 </html>
