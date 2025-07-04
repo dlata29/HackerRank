@@ -29,12 +29,14 @@
   <body>
     <div class="container"></div>
     <script>
-      function inner() {
-        console.log(x);
+      function a() {
+        c();
+        function c() {
+          console.log(b);
+        }
       }
-
-      var x = 10;
-      inner();
+      var b = 10;
+      a();
     </script>
   </body>
 </html>
