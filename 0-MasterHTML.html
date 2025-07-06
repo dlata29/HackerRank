@@ -27,13 +27,22 @@
     }
   </style>
   <body>
-    <div class="container"></div>
+    <div class="container">
+      <button id="dvBtn">Click me</button>
+    </div>
 
     <script>
-      a();
-      const a = function () {
-        console.log("called");
-      };
+      const fruits = ["Apple", "Banana", "Mango"];
+
+      fruits.forEach((fruit) => {
+        const btn = document.createElement("button");
+        btn.textContent = fruit;
+        document.body.appendChild(btn);
+
+        btn.addEventListener("click", () => {
+          alert("You clicked: " + fruit);
+        });
+      });
     </script>
   </body>
 </html>
