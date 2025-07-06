@@ -30,11 +30,10 @@
     <div class="container"></div>
 
     <script>
-      {
-        var a = 10;
-        let b = 20;
-        const c = 30;
-      }
+      a();
+      const a = function () {
+        console.log("called");
+      };
     </script>
   </body>
 </html>
