@@ -3,91 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PaperTag Prototype</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
   </head>
-  <style>
-    /* structural, interview‑style CSS (no colours / fonts) */
-    * {
-      box-sizing: border-box;
-      padding: 0;
-      margin: 0;
-    }
-    body {
-      font-family: system-ui, sans-serif;
-      display: flex;
-      justify-content: center;
-    }
-    .container {
-      max-width: 640px;
-      width: 100%;
-      padding: 1rem;
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    .card {
-      border: 1px solid #ddd;
-      padding: 1rem;
-      margin-bottom: 1.5rem;
-      border-radius: 8px;
-    }
-    textarea,
-    input {
-      width: 100%;
-      padding: 0.5rem;
-      margin: 0.5rem 0 1rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    button {
-      padding: 0.6rem 1rem;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    button:hover {
-      opacity: 0.9;
-    }
-    .tagOutput {
-      font-size: 1.25rem;
-      font-weight: 600;
-    }
-    .result {
-      background: #f7f7f7;
-      padding: 0.75rem;
-      border-radius: 4px;
-      min-height: 3rem;
-    }
-    @media (min-width: 600px) {
-      .card {
-        display: flex;
-        flex-direction: column;
-      }
-    }
-  </style>
   <body>
-    <main class="container">
-      <h1>PaperTag Prototype</h1>
+    <div style="font-size: 28px">Hello divya</div>
+    <script>
+      const p = new Promise((resolve, reject) => {
+        return resolve("Promise is resolved");
+      });
 
-      <!-- Create Tag -->
-      <section class="card">
-        <h2>Create a Tag</h2>
-        <textarea id="contentInput" placeholder="Paste a link or type a note…"></textarea>
-        <button id="generateBtn">Generate Tag</button>
-        <p id="newTag" class="tagOutput"></p>
-      </section>
+      function getData() {
+        p.then((res) => console.log(res));
+        console.log("Heelo");
+      }
 
-      <!-- Retrieve Tag -->
-      <section class="card">
-        <h2>Retrieve a Tag</h2>
-        <input id="tagInput" maxlength="4" placeholder="4‑digit tag" />
-        <button id="retrieveBtn">Fetch</button>
-        <pre id="resultArea" class="result"></pre>
-      </section>
-    </main>
-
-    <script src="app.js"></script>
+      getData();
+    </script>
   </body>
 </html>
