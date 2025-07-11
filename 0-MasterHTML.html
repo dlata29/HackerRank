@@ -8,28 +8,18 @@
   <body>
     <div style="font-size: 28px">Hello divya</div>
     <script>
-      const p1 = new Promise((resolve, reject) => {
-        setTimeout(() => resolve("p1 printed"));
-      }, 10000);
+      const obj1 = {
+        a: 10,
+        x: function () {
+          console.log(this.a, hometown);
+        },
+      };
 
-      const p2 = new Promise((resolve, reject) => {
-        setTimeout(() => resolve("p2 printed"));
-      }, 5000);
+      const obj2 = {
+        a: 20,
+      };
 
-      async function getData() {
-        const ans = await Promise.all([p1, p2]);
-        // const ans1 = await p1;
-        console.log(ans);
-
-        console.log("waiting over for p1");
-
-        // const ans2 = await p2;
-        // console.log(ans2);
-        console.log("waiting over for p2");
-      }
-      console.log("Hello");
-      getData();
-      console.log("hello2");
+      obj1.x.call(obj2, "Mum");
     </script>
   </body>
 </html>
