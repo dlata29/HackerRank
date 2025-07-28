@@ -8,18 +8,10 @@
   <body>
     <div style="font-size: 28px">Hello divya</div>
     <script>
-      const obj1 = {
-        a: 10,
-        x: function () {
-          console.log(this.a, hometown);
-        },
-      };
-
-      const obj2 = {
-        a: 20,
-      };
-
-      obj1.x.call(obj2, "Mum");
+      function x() {
+        console.log(this);
+      }
+      x();
     </script>
   </body>
 </html>
