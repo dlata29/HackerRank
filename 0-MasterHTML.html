@@ -8,11 +8,19 @@
   <body>
     <div style="font-size: 28px">Hello divya</div>
     <script>
-      "use strict";
-      function x() {
-        console.log(this);
-      }
-      window.x();
+      const obj1 = {
+        a: "10",
+        x: function () {
+          const c = () => {
+            const d = () => {
+              console.log(this);
+            };
+            d();
+          };
+          c();
+        },
+      };
+      console.log(obj1.x());
     </script>
   </body>
 </html>
