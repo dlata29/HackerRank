@@ -21,33 +21,14 @@
     </style>
   </head>
   <body>
-    <h1>once() Demo – Real “Add to Cart” Example</h1>
-
-    <button id="btn-wrong">Add to Cart (WRONG once)</button>
-    <br />
-    <button id="btn-right">Add to Cart (RIGHT once)</button>
-    <br />
-    <button id="btn-noargs">Call once() with NO args</button>
-    <br />
-    <button id="btn-async">Add to Cart (RIGHT onceAsync, prevent double API)</button>
-
     <h3>Open DevTools → Console to see logs</h3>
 
     <script>
-      class Person {
-        constructor(name) {
-          this.name = name;
-        }
-        greet() {
-          console.log(`Hi, I'm ${this.name}`);
-        }
+      const data = { a: 1, b: 2 };
+
+      for (let i in data) {
+        console.log(i, data[i]);
       }
-
-      const p1 = new Person("Ava");
-
-      const p2 = new Person("eva");
-      console.log(p1);
-      console.log(p2);
     </script>
   </body>
 </html>
