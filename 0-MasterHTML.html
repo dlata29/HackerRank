@@ -8,19 +8,21 @@
   <body>
     <div style="font-size: 28px">Hello divya</div>
     <script>
-      const obj1 = {
-        a: "10",
-        x: function () {
-          const c = () => {
-            const d = () => {
-              console.log(this);
-            };
-            d();
-          };
-          c();
-        },
-      };
-      console.log(obj1.x());
+      function c1(x){
+        console.log("hi");
+        return function c2(x+2);
+      }
+
+      function c2(y){
+          console.log(y);
+          return function c3();
+      }
+
+      function c3(){
+          console.log("finally");
+      }
+
+      console.log(c1());
     </script>
   </body>
 </html>
