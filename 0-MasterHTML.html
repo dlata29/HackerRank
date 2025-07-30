@@ -34,142 +34,20 @@
     <h3>Open DevTools → Console to see logs</h3>
 
     <script>
-      // -------------------------------
-      // Cart object – depends on `this`
-      // -------------------------------
-      const cart = {
-        items: [],
-        add(product) {
-          // this === cart is required!
-          this.items.push(product);
-          console.log("[cart.add] Added:", product.id, "Total:", this.items.length);
-          return this.items.length;
-        },
-        addAsync(product) {
-          // Simulate an API call (e.g., POST /cart) – returns a Promise
-          console.log("[cart.addAsync] starting API for", product.id);
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              this.items.push(product);
-              console.log(
-                "[cart.addAsync] API done. Added:",
-                product.id,
-                "Total:",
-                this.items.length
-              );
-              resolve(this.items.length);
-            }, 1200); // 1.2s delay to simulate network
-          });
-        },
-      };
-
-      // -------------------------------------------------------
-      // WRONG once: loses `this` (calls fn w/o receiver) & args
-      // -------------------------------------------------------
-      function onceWrong(fn) {
-        let called = false,
-          value;
-        return function (...args) {
-          if (!called) {
-            called = true;
-            // ❌ Calling without binding `this` → `this` becomes undefined (strict mode)
-            // ❌ Works by accident only if fn doesn't use `this`
-            value = fn(...args);
-          }
-          return value;
-        };
-      }
-
-      // -------------------------------------------------------
-      // RIGHT once: preserves `this` and forwards all arguments
-      // -------------------------------------------------------
-      function once(fn) {
-        let called = false,
-          value;
-        return function (...args) {
-          if (!called) {
-            called = true;
-            // ✅ Preserve the caller's `this` and pass the same args
-            value = fn.apply(this, args);
-          }
-          return value;
-        };
-      }
-
-      // ----------------------------------------------------------------
-      // RIGHT onceAsync: caches the same Promise to prevent double calls
-      // ----------------------------------------------------------------
-      function onceAsync(fn) {
-        let called = false,
-          promise;
-        return function (...args) {
-          if (!called) {
-            called = true;
-            promise = Promise.resolve(fn.apply(this, args));
-          } else {
-            console.log("[onceAsync] reusing existing promise/result");
-          }
-          return promise;
-        };
-      }
-
-      // --------------------------------------
-      // Wiring buttons for interactive testing
-      // --------------------------------------
-      const product = { id: 101 };
-
-      // 1) WRONG: will throw or behave incorrectly because `this` is lost
-      const addOnceWrong = onceWrong(cart.add);
-      document.getElementById("btn-wrong").addEventListener("click", () => {
-        try {
-          // We attempt to restore `this` with .call, but onceWrong already called fn without `this`
-          // when the first click happens. To show the issue clearly, we call it directly:
-          const result = addOnceWrong(product); // ❌ `this` inside cart.add is undefined
-          console.log("[WRONG] result:", result);
-        } catch (e) {
-          console.error("[WRONG] Error:", e.message);
+      class Person {
+        constructor(name) {
+          this.name = name;
         }
-      });
+        greet() {
+          console.log(`Hi, I'm ${this.name}`);
+        }
+      }
 
-      // 2) RIGHT: preserves `this` and args
-      const addOnceRight = once(cart.add);
-      document.getElementById("btn-right").addEventListener("click", () => {
-        // Pass both `this` (cart) and the product argument:
-        const result = addOnceRight.call(cart, product);
-        console.log("[RIGHT] result:", result, "(subsequent clicks reuse this result)");
-      });
+      const p1 = new Person("Ava");
 
-      // 3) RIGHT with NO arguments – shows ...args works even when you pass nothing
-      const sayHello = function () {
-        console.log("[sayHello] this === cart ?", this === cart);
-        return "hello";
-      };
-      const sayHelloOnce = once(sayHello);
-      document.getElementById("btn-noargs").addEventListener("click", () => {
-        // No args passed – ...args becomes an empty array []
-        const result = sayHelloOnce.call(cart);
-        console.log("[NO ARGS] result:", result);
-      });
-
-      // 4) ASYNC: prevent double API call (e.g., double-click during network)
-      const addOnceAsync = onceAsync(cart.addAsync);
-      document.getElementById("btn-async").addEventListener("click", async () => {
-        const p = addOnceAsync.call(cart, { id: Math.floor(Math.random() * 1000) });
-        // Subsequent clicks while the first is in flight will reuse the same promise
-        const total = await p;
-        console.log("[ASYNC] cart total:", total);
-      });
-
-      // --------------------------------------
-      // Notes printed once on page load
-      // --------------------------------------
-      console.log("=== Instructions ===");
-      console.log("1) Click 'WRONG' → see error or incorrect `this`.");
-      console.log("2) Click 'RIGHT' multiple times → only first call adds; others reuse result.");
-      console.log("3) Click 'NO ARGS' → shows ...args = [] still works & `this` preserved.");
-      console.log(
-        "4) Click 'ASYNC' twice quickly → only one API call; second click reuses the promise."
-      );
+      const p2 = new Person("eva");
+      console.log(p1);
+      console.log(p2);
     </script>
   </body>
 </html>
