@@ -21,14 +21,27 @@
     </style>
   </head>
   <body>
-    <h3>Open DevTools → Console to see logs</h3>
-
     <script>
-      function p() {
-        k = 5;
-        return k;
+      const arr = [1, 2, 3, 4, 5];
+
+      function cb(el) {
+        return el % 2;
       }
-      p();
+
+      Array.prototype.myFilter = function (cb) {
+        const obj = this;
+        const result = [];
+
+        for (let i = 0; i < obj.length; i++) {
+          const cbVal = cb(obj[i]);
+          if (cbVal) {
+            result.push(cbVal);
+          }
+        }
+        return result;
+      };
+      const arr3 = arr.myFilter(cb);
+      console.log(arr3);
     </script>
   </body>
 </html>
