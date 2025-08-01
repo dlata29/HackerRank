@@ -69,6 +69,9 @@ document.querySelectorAll(".column").forEach((column) => {
       e.target.appendChild(draggedCard);
     }
   });
+
+  // column.classList.add("dropped");
+  // setTimeout(() => column.classList.remove("dropped"), 300);
 });
 
 loadTasks();

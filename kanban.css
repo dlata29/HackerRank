@@ -46,3 +46,12 @@ h1 {
 .card.over {
   border: 2px dashed #007bff;
 }
+
+.column.hovered {
+  background-color: #f0f8ff;
+  transition: background-color 0.3s;
+}
+
+.column.dropped {
+  background-color: #d1ffd1 !important;
+}
