@@ -36,4 +36,13 @@ h1 {
   padding: 10px;
   margin-bottom: 10px;
   text-align: left;
+  cursor: grab;
+}
+
+.card.dragging {
+  opacity: 0.5;
+}
+
+.card.over {
+  border: 2px dashed #007bff;
 }
