@@ -2,46 +2,24 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>once() Demo</title>
-    <style>
-      body {
-        font-family: system-ui, sans-serif;
-        padding: 20px;
-      }
-      button {
-        padding: 8px 14px;
-        margin: 6px 0;
-      }
-      pre {
-        background: #f6f8fa;
-        padding: 12px;
-        border-radius: 6px;
-        overflow: auto;
-      }
-    </style>
-  </head>
+    <title>Kanban board</title>
+    <link rel="stylesheet" href="kanban.css" />
+  
+
   <body>
-    <script>
-      const arr = [1, 2, 3, 4, 5];
+    <h1>Your tasks board</h1>
+    <div id="board">
+      <div class="column" data-status="todo">
+        <h2>To-Do</h2>
+      </div>
+      <div class="column" data-status="ongoing">
+        <h2>On Going</h2>
+      </div>
+      <div class="column" data-status="completed">
+        <h2>Accomplished</h2>
+      </div>
+    </div>
 
-      function cb(el) {
-        return el % 2;
-      }
-
-      Array.prototype.myFilter = function (cb) {
-        const obj = this;
-        const result = [];
-
-        for (let i = 0; i < obj.length; i++) {
-          const cbVal = cb(obj[i]);
-          if (cbVal) {
-            result.push(cbVal);
-          }
-        }
-        return result;
-      };
-      const arr3 = arr.myFilter(cb);
-      console.log(arr3);
-    </script>
+    <script src="MasterJS.js"></script>
   </body>
 </html>

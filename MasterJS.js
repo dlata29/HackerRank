@@ -1,21 +1,23 @@
-const p1 = new Promise((resolve, reject) => {
-  setTimeout(() => {
-    reject("p1 resole");
-  }, 1000);
-});
-const p2 = new Promise((resolve, reject) => {
-  setTimeout(() => {
-    reject("p2 resole");
-  }, 1000);
-});
-const p3 = new Promise((resolve, reject) => {
-  setTimeout(() => {
-    reject("p3 resole");
-  }, 1000);
-});
+async function loadTasks() {
+  const res = await fetch("data.json");
+  const data = await res.json();
 
-Promise.any([p1, p2, p3])
-  .then((res) => {
-    console.log(res);
-  })
-  .catch((err) => console.error(err.errors));
+  for (const [status, tasks] of Object.entries(data)) {
+    const fetchedColumn = document.querySelector(`[data-status="${status}"]`);
+    if (!fetchedColumn) continue;
+
+    tasks.forEach((task) => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.setAttribute("draggable", "true");
+      card.dataset.id = task.id;
+      card.innerHTML = `
+        <strong>${task.name}</strong>
+        <p>${task.description}</p>
+      `;
+      fetchedColumn.appendChild(card);
+    });
+  }
+}
+
+loadTasks();
