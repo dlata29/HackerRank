@@ -8,12 +8,21 @@
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">Initial Render</div>
     <script>
-      const heading = React.createElement("h1", { id: "title" }, "Hello all");
-      console.log(heading);
-      const root = ReactDOM.createRoot(document.getElementById("root"));
-      root.render(heading);
+      const person = {
+        name: "Divya",
+        print: function () {
+          console.log(this.name);
+        },
+
+        printName: () => {
+          console.log(this.name);
+        },
+      };
+
+      console.log(person.print());
+      console.log(person.printName());
     </script>
   </body>
 </html>
