@@ -8,18 +8,23 @@
   <body>
     <div id="root">Initial Render</div>
     <script>
-      const person = {
-        name: "Divya",
-        print: function () {
-          console.log(this.name);
-        },
+      const myMap = new Map();
+      class myClass {
+        constructor() {
+          this.key = key;
+          this.value = value;
+        }
 
-        printName: () => {
-          console.log(this.name);
-        },
-      };
-      person.print();
-      person.printName();
+        add() {
+          myMap.set(key, value);
+        }
+
+        get() {
+          myMap.get(key);
+        }
+      }
+
+      const o1 = new myClass("1", "Divya");
     </script>
   </body>
 </html>
