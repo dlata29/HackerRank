@@ -8,23 +8,19 @@
   <body>
     <div id="root">Initial Render</div>
     <script>
-      const myMap = new Map();
-      class myClass {
-        constructor() {
-          this.key = key;
-          this.value = value;
-        }
-
-        add() {
-          myMap.set(key, value);
-        }
-
-        get() {
-          myMap.get(key);
-        }
+      function getType(value) {
+        if (value === null) return "null";
+        if (Number.isNaN(value)) return "nan";
+        if (Array.isArray(value)) return "5";
+        if (typeof value === "object") return "6";
+        return typeof value;
       }
 
-      const o1 = new myClass("1", "Divya");
+      console.log(getType(null));
+      console.log(getType(NaN));
+      console.log(getType([]));
+      console.log(getType({}));
+      console.log(getType(() => {}));
     </script>
   </body>
 </html>
