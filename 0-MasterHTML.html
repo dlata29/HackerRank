@@ -8,19 +8,23 @@
   <body>
     <div id="root">Initial Render</div>
     <script>
-      function getType(value) {
-        if (value === null) return "null";
-        if (Number.isNaN(value)) return "nan";
-        if (Array.isArray(value)) return "5";
-        if (typeof value === "object") return "6";
-        return typeof value;
+      function outer() {
+        let out = 20;
+
+        return function inner() {
+          return ++out;
+        };
       }
 
-      console.log(getType(null));
-      console.log(getType(NaN));
-      console.log(getType([]));
-      console.log(getType({}));
-      console.log(getType(() => {}));
+      const a = outer();
+      console.log(a());
+      console.log(a());
+      console.log(a());
+      console.log("------------");
+      const b = outer();
+      console.log(b());
+      console.log(b());
+      console.log(b());
     </script>
   </body>
 </html>
