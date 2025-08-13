@@ -8,23 +8,32 @@
   <body>
     <div id="root">Initial Render</div>
     <script>
-      function outer() {
-        let out = 20;
+      const animal = {
+        makeSound() {
+          return "Some sound";
+        },
+        eat() {
+          return "Eating...";
+        },
+      };
 
-        return function inner() {
-          return ++out;
-        };
-      }
+      // Create a more specific object
+      const dog = {
+        bark() {
+          return "Woof!";
+        },
+      };
 
-      const a = outer();
-      console.log(a());
-      console.log(a());
-      console.log(a());
-      console.log("------------");
-      const b = outer();
-      console.log(b());
-      console.log(b());
-      console.log(b());
+      // Set animal as dog's prototype (like saying "dog inherits from animal")
+      Object.setPrototypeOf(animal, dog);
+
+      // Now dog can use methods from both itself and its prototype
+      console.log(dog);
+      console.log(animal);
+      console.log(dog.bark()); // "Woof!" (found on dog)
+      console.log(dog.makeSound()); // "Some sound" (found on animal)
+      console.log(dog.eat()); // "Eating..." (found on animal)
+      console.log(dog.dance); // undefined (not found anywhere in the chain)
     </script>
   </body>
 </html>
