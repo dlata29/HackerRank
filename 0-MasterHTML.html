@@ -8,32 +8,22 @@
   <body>
     <div id="root">Initial Render</div>
     <script>
-      const animal = {
-        makeSound() {
-          return "Some sound";
-        },
-        eat() {
-          return "Eating...";
-        },
-      };
+      // function getUser(userID){
+      //   const userDetails = fetch(userID from url);
 
-      // Create a more specific object
-      const dog = {
-        bark() {
-          return "Woof!";
-        },
-      };
+      //   getPreviousOrderplaced(userDetails.uniqueName){
 
-      // Set animal as dog's prototype (like saying "dog inherits from animal")
-      Object.setPrototypeOf(animal, dog);
+      //   }
+      // }
 
-      // Now dog can use methods from both itself and its prototype
-      console.log(dog);
-      console.log(animal);
-      console.log(dog.bark()); // "Woof!" (found on dog)
-      console.log(dog.makeSound()); // "Some sound" (found on animal)
-      console.log(dog.eat()); // "Eating..." (found on animal)
-      console.log(dog.dance); // undefined (not found anywhere in the chain)
+      function getUser(userID) {
+        return new Promise((resolve, reject) => {
+          const userDetails = "Divya";
+          resolve(userDetails);
+        });
+      }
+
+      getUser().then((user) => console.log(user));
     </script>
   </body>
 </html>
