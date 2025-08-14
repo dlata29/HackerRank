@@ -7,57 +7,6 @@
   </head>
   <body>
     <div id="root">Initial Render</div>
-    <script>
-      function userData(eachUser) {
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            resolve({ id: eachUser, Name: `User_${eachUser}` });
-          }, 1000);
-        });
-      }
-
-      function userPosts(eachUser) {
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            resolve([
-              { id: eachUser, Name: `PostComment_${eachUser}` },
-              { id: eachUser, Name: `PostComment_${eachUser}` },
-            ]);
-          }, 1000);
-        });
-      }
-
-      function userReplies(eachUser) {
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            resolve([
-              { id: eachUser, Name: `Reply_${eachUser}` },
-              { id: eachUser, Name: `Reply2_${eachUser}` },
-            ]);
-          }, 1000);
-        });
-      }
-      async function loadUserProfile(eachUser) {
-        try {
-          const user = await userData(eachUser);
-          const posts = await userPosts(eachUser);
-          const replies = await userReplies(eachUser);
-
-          return [user, posts, replies];
-        } catch (err) {
-          console.log("Error loading in loadUserProfile");
-        }
-      }
-
-      async function loadMultipleProfiles(users) {
-        try {
-          const resultSet = Promise.all(users.map((eachUser) => loadUserProfile(eachUser)));
-          return resultSet;
-        } catch (err) {
-          console.log("Error loading in loadMultipleProfiles");
-        }
-      }
-      loadMultipleProfiles([1, 2, 3]).then((profile) => console.log("Loaded profiles:", profile));
-    </script>
+    <script src="script.js" />
   </body>
 </html>
