@@ -1,26 +1,27 @@
-class BankAccount {
-  #balance = 0;
+// function Bank(initial) {
+//   this.initial = initial;
+// }
 
-  checkAmountType(amount) {
-    if (typeof amount !== "number" && amount < 0) {
-      return false;
-    }
+// Bank.prototype.add = function (amount) {
+//   return this.initial + amount;
+// };
+
+class Bank {
+  constructor() {
+    this.initial = 0;
   }
 
-  deposit(amount) {
-    let amountType = this.checkAmountType(amount);
-    if (amountType) {
-      this.#balance += amount;
-    } else {
-      throw new Error("Entered amount is invalid");
-    }
+  add(amount) {
+    return (this.initial = this.initial + amount);
   }
-
-  getBalance() {
-    return this.#balance;
+  get bal() {
+    return this.initial;
   }
 }
 
-const acc = new BankAccount();
-acc.deposit(100);
-console.log(acc.getBalance());
+const p1 = new Bank();
+console.log(p1.add(200));
+const p2 = new Bank();
+console.log(p2.add(100));
+console.log(p2.bal);
+console.log(p1.bal);
