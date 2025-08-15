@@ -1,17 +1,15 @@
-function askQ(question, yes, no) {
-  if (confirm(question)) {
-    yes();
-  } else {
-    no();
+let age = prompt("What is your age?", 18);
+
+// conditionally declare a function
+if (age < 18) {
+  function aa() {
+    console.log("Hello!");
+  }
+} else {
+  function aa() {
+    console.log("Greetings!");
   }
 }
 
-function showYes() {
-  console.log("yay");
-}
-
-function showNo() {
-  console.log("nooo");
-}
-
-askQ("do you agree", showYes, showNo);
+// ...use it later
+console.log(aa()); // Error: welcome is not defined
