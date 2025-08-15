@@ -1,3 +1,4 @@
+"use strict";
 let age = prompt("What is your age?", 18);
 
 // conditionally declare a function
