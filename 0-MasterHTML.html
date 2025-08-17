@@ -4,10 +4,81 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #74ebd5 0%, #9face6 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        padding: 20px;
+      }
+
+      .main {
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+        width: 100%;
+        max-width: 400px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 0.6s ease-in;
+      }
+
+      h2 {
+        text-align: center;
+        margin-bottom: 15px;
+        color: #333;
+      }
+
+      .input {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      .input input {
+        flex: 1;
+        padding: 10px;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: 0.3s;
+      }
+
+      #taskList {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .task {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #f7f7f7;
+        padding: 10px 15px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease;
+      }
+    </style>
   </head>
   <body>
-    <div id="root">Initial Render</div>
-    <button id="btn">Click</button>
+    <div class="main">
+      <div class="input">
+        <input id="taskInput" type="text" placeholder="Enter todo" />
+        <button id="addBtn">Add task</button>
+      </div>
+      <div class="dvOp" id="taskList"></div>
+    </div>
+
     <script src="script.js" />
   </body>
 </html>
