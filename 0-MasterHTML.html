@@ -21,63 +21,30 @@
         padding: 20px;
       }
 
-      .main {
-        background: white;
+      .comment {
+        margin: 5px 0;
+        padding: 5px;
+        border: 1px solid #ddd;
+      }
+
+      .replies {
+        margin-left: 20px;
+        border-left: 1px solid #ccc;
+        padding-left: 10px;
+      }
+      .mainDv {
+        background-color: white;
         padding: 20px;
-        border-radius: 15px;
-        width: 100%;
-        max-width: 400px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        animation: fadeIn 0.6s ease-in;
-      }
-
-      h2 {
-        text-align: center;
-        margin-bottom: 15px;
-        color: #333;
-      }
-
-      .input {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 15px;
-      }
-
-      .input input {
-        flex: 1;
-        padding: 10px;
-        border: 2px solid #ddd;
-        border-radius: 10px;
-        font-size: 16px;
-        transition: 0.3s;
-      }
-
-      #taskList {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      .task {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: #f7f7f7;
-        padding: 10px 15px;
-        border-radius: 10px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        transition: transform 0.2s ease;
       }
     </style>
   </head>
   <body>
-    <div class="main">
-      <div class="input">
-        <input id="taskInput" type="text" placeholder="Enter todo" />
-        <button id="addBtn">Add task</button>
-      </div>
-      <div class="dvOp" id="taskList"></div>
+    <div class="mainDv">
+      <input id="newComment" type="text" placeholder="Add a comment" />
+      <button id="addCommentBtn">Add Comment</button>
     </div>
+
+    <div id="commentsSection"></div>
 
     <script src="script.js" />
   </body>
