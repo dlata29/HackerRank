@@ -1,16 +1,20 @@
 let comments = JSON.parse(localStorage.getItem("comments")) || [];
 
+//local storage save comment
 function saveComments() {
   localStorage.setItem("comments", JSON.stringify(comments));
 }
 
 const container = document.getElementById("commentsSection");
 
+//call renderall
+
 function renderAllComments(commentsArr, container) {
   container.innerHTML = ""; // clear before re-rendering
   commentsArr.forEach((comment) => renderComment(comment, container));
 }
 
+//render each
 function renderComment(comment, container) {
   const div = document.createElement("div");
   div.className = "comment";
@@ -55,9 +59,17 @@ function renderComment(comment, container) {
     replyForm.style.display = "none";
   });
 
+  const repliesDiv = document.createElement("div");
+  repliesDiv.className = "replies";
+  div.appendChild(repliesDiv);
+
+  if (comment.replies && comment.replies.length > 0) {
+    comment.replies.forEach((child) => renderComment(child, repliesDiv));
+  }
   container.appendChild(div);
 }
 
+//main
 document.getElementById("addCommentBtn").addEventListener("click", () => {
   const input = document.getElementById("newComment");
   const text = input.value.trim();
@@ -68,4 +80,6 @@ document.getElementById("addCommentBtn").addEventListener("click", () => {
   renderAllComments(comments, document.getElementById("commentsSection"));
   input.value = "";
 });
+
+//render all
 renderAllComments(comments, document.getElementById("commentsSection"));
