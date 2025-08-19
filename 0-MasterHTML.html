@@ -5,130 +5,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
+      * {
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+      }
       body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background: aliceblue; /* light gray-blue background */
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-height: 100vh;
+        background-color: aliceblue;
+      }
+      .kanban-board {
+        padding: 20px;
       }
 
-      /* Top input section */
-      .mainDv {
-        display: flex;
-        gap: 10px;
-        margin: 20px auto;
-        width: 60%;
-        max-width: 600px;
-        justify-content: center;
+      .task-input {
+        margin-bottom: 20px;
       }
 
-      .mainDv input {
-        flex: 1;
+      .columns {
+        display: flex;
+        gap: 20px;
+      }
+      .column {
+        flex: 1; /* equal width */
+        background: #fff;
         padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        font-size: 14px;
-      }
-
-      .mainDv button {
-        padding: 10px 16px;
-        background-color: #3498db;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 14px;
-        transition: background 0.3s;
-      }
-
-      .mainDv button:hover {
-        background-color: #2980b9;
-      }
-
-      /* Comments container */
-      #commentsSection {
-        width: 60%;
-        max-width: 600px;
-      }
-
-      /* Each comment */
-      .comment {
-        background: white;
-        border: 1px solid #ddd;
-        padding: 12px;
-        margin: 10px 0;
         border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        min-height: 300px;
       }
-
-      /* Reply button */
-      .comment button {
-        background: #2ecc71;
-        color: white;
-        border: none;
-        padding: 6px 10px;
-        margin-top: 8px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 12px;
-        transition: background 0.3s;
-      }
-
-      .comment button:hover {
-        background: #27ae60;
-      }
-
-      /* Nested replies */
-      .replies {
-        margin-left: 20px;
+      task-list {
         margin-top: 10px;
       }
 
-      /* Hidden reply form */
-      .reply-form {
-        margin-top: 10px;
-        display: none;
+      .task {
+        background: white;
+        padding: 8px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        cursor: grab;
       }
-
-      .reply-form input {
-        padding: 6px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        margin-right: 6px;
+      .task-input {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
       }
-
-      .reply-form button {
-        background: #9b59b6;
-        color: white;
-        border: none;
-        padding: 6px 10px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 12px;
-        transition: background 0.3s;
+      #newTask {
+        padding: 10px 20px;
+        border-radius: 6px;
       }
-
-      .reply-form button:hover {
-        background: #8e44ad;
+      #addTaskBtn {
+        background-color: yellowgreen;
+        padding: 2px;
       }
     </style>
   </head>
   <body>
-    <div class="mainDv">
-      <input id="newComment" type="text" placeholder="Add a comment" />
-      <button id="addCommentBtn">Add Comment</button>
+    <div class="kanban-board">
+      <!-- Input to add new tasks -->
+      <div class="task-input">
+        <input type="text" id="newTask" placeholder="Enter a task" />
+        <button id="addTaskBtn">Add Task</button>
+      </div>
+
+      <!-- Kanban columns -->
+      <div class="columns">
+        <div class="column" id="todo">
+          <h2>To Do</h2>
+          <div class="task-list"></div>
+        </div>
+
+        <div class="column" id="inprogress">
+          <h2>In Progress</h2>
+          <div class="task-list"></div>
+        </div>
+
+        <div class="column" id="done">
+          <h2>Done</h2>
+          <div class="task-list"></div>
+        </div>
+      </div>
     </div>
-
-    <div id="commentsSection"></div>
-
-    <div id="commentsSection"></div>
-    <input id="newComment" type="text" placeholder="Add a comment" />
-    <button id="addCommentBtn">Add Comment</button>
-
     <script src="script.js" />
   </body>
 </html>
