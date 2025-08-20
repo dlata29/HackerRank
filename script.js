@@ -6,16 +6,42 @@ let draggedTask = null;
 function createTask(text) {
   const task = document.createElement("div");
   task.className = "task";
-  task.textContent = text;
   task.setAttribute("draggable", "true");
 
+  const content = document.createElement("div");
+  content.className = "task-content";
+  content.textContent = text;
+
+  const taskBtn = document.createElement("button");
+  taskBtn.className = "taskBtn";
+  taskBtn.textContent = "Reply";
+
+  const replies = document.createElement("div");
+  replies.className = "replies"; // nested replies container
+
+  // drag events
   task.addEventListener("dragstart", (e) => {
     draggedTask = task;
+    task.classList.add("dragging");
   });
 
   task.addEventListener("dragend", () => {
-    draggedTask = null; // cleanup
+    draggedTask = null;
+    task.classList.remove("dragging");
   });
+
+  // reply button event
+  taskBtn.addEventListener("click", () => {
+    const replyText = prompt("Enter your reply:");
+    if (replyText) {
+      const replyTask = createTask(replyText);
+      replies.appendChild(replyTask);
+    }
+  });
+
+  task.appendChild(content);
+  task.appendChild(taskBtn);
+  task.appendChild(replies);
 
   return task;
 }
