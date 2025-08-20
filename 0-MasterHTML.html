@@ -4,114 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <style>
-      * {
-        margin: 0px;
-        padding: 0px;
-        box-sizing: border-box;
-      }
-      body {
-        background-color: aliceblue;
-      }
-      .kanban-board {
-        padding: 20px;
-      }
-
-      .task-input {
-        margin-bottom: 20px;
-      }
-
-      .columns {
-        display: flex;
-        gap: 20px;
-      }
-      .column {
-        flex: 1; /* equal width */
-        background: #fff;
-        padding: 10px;
-        border-radius: 8px;
-        min-height: 300px;
-      }
-      task-list {
-        margin-top: 10px;
-      }
-
-      .task {
-        background: #ede5e5ab;
-        padding: 25px 20px 25px 30px;
-        margin: 15px;
-        border-radius: 5px;
-        cursor: grab;
-        font-size: 20px;
-      }
-      .task-input {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-      }
-      #newTask {
-        padding: 10px 20px;
-        border-radius: 6px;
-      }
-      #addTaskBtn {
-        background-color: yellowgreen;
-        padding: 2px;
-      }
-      .task-list {
-        min-height: 200px;
-
-        padding: 10px;
-      }
-
-      .task {
-        background: white;
-        margin: 5px;
-        padding: 10px;
-        border: 1px solid #999;
-        cursor: grab;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .taskBtn {
-        background: #636c75;
-        color: white;
-        border: none;
-        padding: 5px 10px;
-        border-radius: 5px;
-        font-size: 0.9rem;
-        cursor: pointer;
-        transition: background 0.2s ease;
-      }
-    </style>
   </head>
   <body>
-    <div class="kanban-board">
-      <!-- Input to add new tasks -->
-      <div class="task-input">
-        <input type="text" id="newTask" placeholder="Enter a task" />
-        <button id="addTaskBtn">Add Task</button>
-      </div>
+    <h2>To-Do List</h2>
 
-      <!-- Kanban columns -->
-      <div class="columns">
-        <div class="column" id="todo">
-          <h2>To Do</h2>
-          <div class="task-list"></div>
-        </div>
+    <input id="taskInput" type="text" placeholder="Enter task" />
+    <button id="addBtn">Add</button>
 
-        <div class="column" id="inprogress">
-          <h2>In Progress</h2>
-          <div class="task-list"></div>
-        </div>
-
-        <div class="column" id="done">
-          <h2>Done</h2>
-          <div class="task-list"></div>
-        </div>
-      </div>
+    <div class="filters">
+      <button data-filter="all">All</button>
+      <button data-filter="active">Active</button>
+      <button data-filter="completed">Completed</button>
     </div>
-    <script src="script.js" />
+
+    <ul id="taskList"></ul>
   </body>
 </html>
