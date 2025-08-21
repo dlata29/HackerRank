@@ -5,11 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f7fa;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+      color: #222;
+    }
+
+    /* Input + Button */
+    .container {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    #taskInput {
+      flex: 1;
+      padding: 12px 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    #taskInput:focus {
+      border-color: #0077ff;
+      outline: none;
+      box-shadow: 0 0 5px rgba(0, 119, 255, 0.2);
+    }
+    #addBtn {
+      padding: 12px 20px;
+      background: #0077ff;
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .filters {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .filters button {
+      padding: 8px 16px;
+      border: 1px solid #ccc;
+      background: #fff;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+  </style>
   <body>
     <h2>To-Do List</h2>
 
-    <input id="taskInput" type="text" placeholder="Enter task" />
-    <button id="addBtn">Add</button>
+    <div class="container">
+      <input id="taskInput" type="text" placeholder="Enter task" />
+      <button id="addBtn">Add</button>
+    </div>
 
     <div class="filters">
       <button data-filter="all">All</button>
