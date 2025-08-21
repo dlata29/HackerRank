@@ -7,7 +7,7 @@ const taskList = document.getElementById("taskList");
 const filterBtns = document.querySelectorAll(".filters button");
 
 function render() {
-  taskList.innerHTMLhtml = "";
+  taskList.innerHTML = "";
 
   let filteredTasks = tasks.filter((task) => {
     if (currentFilter === "active") return !task.completed;
@@ -19,11 +19,27 @@ function render() {
     const li = document.createElement("li");
     li.className = "task";
     li.innerHTML = `
-    <span class="${task.completed ? "completed" : " "}">
-    
+    <div class="${task.completed ? "completed" : " "} eachTask">${task.ip}</div>
+    <div>
+      <button class="toggle" onClick="toggleTask(${task.id})">  ${
+      task.completed ? "Undo" : "Done"
+    }</button>
+      <button  class="Delete" onClick="deleteTask(${task.id})">Delete</button>
+
+    </div>
     `;
-    taskList.textContent += task.ip;
+    taskList.appendChild(li);
   });
+}
+
+function toggleTask(id) {
+  tasks = tasks.map((task) => (task.id === id ? { ...task, completed: !task.completed } : task));
+  render();
+}
+
+function deleteTask(id) {
+  tasks = tasks.filter((task) => task.id !== id);
+  render();
 }
 function addTask(ip) {
   tasks.push({ id: Date.now(), ip, completed: false });
