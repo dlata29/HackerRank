@@ -54,3 +54,12 @@ addBtn.addEventListener("click", () => {
 
   addTask(ip);
 });
+
+filterBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    currentFilter = btn.getAttribute("data-filter");
+    render();
+    filterBtns.forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+  });
+});
