@@ -1,121 +1,300 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Autocomplete with REST API (Countries)</title>
+    <style>
+      body {
+        font-family: system-ui, Arial;
+        padding: 24px;
+        background: #f6fbff;
+      }
+      .autocomplete {
+        max-width: 520px;
+        margin: 0 auto;
+        position: relative;
+      }
+      input#search {
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: 8px;
+        border: 1px solid #cdd9ef;
+        font-size: 16px;
+        box-sizing: border-box;
+      }
+      .suggestions {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin-top: 8px;
+        background: #fff;
+        border: 1px solid #e2ecff;
+        border-radius: 8px;
+        box-shadow: 0 8px 20px rgba(12, 30, 60, 0.06);
+        max-height: 280px;
+        overflow: auto;
+        z-index: 10;
+      }
+      .suggestions ul {
+        list-style: none;
+        margin: 0;
+        padding: 6px;
+      }
+      .suggestions li {
+        padding: 8px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      .suggestions li:hover,
+      .suggestions li.active {
+        background: #eef6ff;
+      }
+      .highlight {
+        font-weight: 700;
+        color: #0b66ff;
+      }
+      .muted {
+        color: #61708a;
+        font-size: 13px;
+      }
+      .note {
+        margin-top: 10px;
+        color: #4b5563;
+        font-size: 13px;
+      }
+      .hidden {
+        display: none;
+      }
+    </style>
   </head>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      height: 100vh;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background: #f5f7fa;
-      color: #333;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 40px 20px;
-      min-height: 100vh;
-    }
-
-    h2 {
-      margin-bottom: 20px;
-      font-size: 1.8rem;
-      color: #222;
-    }
-
-    /* Input + Button */
-    .container {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      width: 100%;
-      max-width: 500px;
-    }
-
-    #taskInput {
-      flex: 1;
-      padding: 12px 15px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 1rem;
-    }
-    #taskInput:focus {
-      border-color: #0077ff;
-      outline: none;
-      box-shadow: 0 0 5px rgba(0, 119, 255, 0.2);
-    }
-    #addBtn {
-      padding: 12px 20px;
-      background: #0077ff;
-      border: none;
-      border-radius: 6px;
-      color: #fff;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    .filters {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .filters button {
-      padding: 8px 16px;
-      border: 1px solid #ccc;
-      background: #fff;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.9rem;
-      transition: all 0.3s ease;
-    }
-
-    .task {
-      display: flex;
-      width: 270px;
-      min-width: 200px;
-      padding: 20px;
-      margin-bottom: 10px;
-      background: white;
-      border: 1px solid #d0d0ce;
-    }
-
-    .eachTask {
-      flex: 1;
-      font-size: 0.9rem;
-    }
-
-    .task button {
-      padding: 10px;
-    }
-    .filters button.active {
-      font-weight: bold;
-      text-decoration: underline;
-    }
-  </style>
   <body>
-    <h2>To-Do List</h2>
+    <div class="autocomplete" id="ac-root">
+      <label for="search" class="sr-only">Search countries</label>
+      <input
+        id="search"
+        type="search"
+        placeholder="Search countries (try: ind, uni, fra)..."
+        role="combobox"
+        aria-autocomplete="list"
+        aria-controls="suggestion-list"
+        aria-expanded="false"
+        autocomplete="off" />
 
-    <div class="container">
-      <input id="taskInput" type="text" placeholder="Enter task" />
-      <button id="addBtn">Add</button>
+      <div class="suggestions hidden" id="suggestions" aria-hidden="true">
+        <ul id="suggestion-list" role="listbox" aria-label="Search suggestions"></ul>
+      </div>
+
+      <div class="note">
+        Arrow keys to navigate, Enter to pick, Esc to close. Uses REST Countries API.
+      </div>
     </div>
 
-    <div class="filters">
-      <button data-filter="all">All</button>
-      <button data-filter="active">Active</button>
-      <button data-filter="completed">Completed</button>
-    </div>
+    <script>
+      (function () {
+        const input = document.getElementById("search");
+        const suggestionsBox = document.getElementById("suggestions");
+        const suggestionList = document.getElementById("suggestion-list");
+        const MAX = 8;
+        const DEBOUNCE_MS = 300;
 
-    <ul id="taskList"></ul>
-    <script src="script.js"></script>
+        let filtered = []; // array of strings (country names)
+        let activeIndex = -1; // highlighted index
+        let open = false;
+        let controller = null; // AbortController for fetch canceling
+
+        // utils
+        function escHtml(s) {
+          return s.replace(
+            /[&<>"']/g,
+            (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m])
+          );
+        }
+        function escapeRegex(q) {
+          return q.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+        }
+        function highlight(text, q) {
+          if (!q) return escHtml(text);
+          const rx = new RegExp(escapeRegex(q), "i");
+          return escHtml(text).replace(rx, (m) => `<span class="highlight">${escHtml(m)}</span>`);
+        }
+
+        function openSuggestions() {
+          suggestionsBox.classList.remove("hidden");
+          suggestionsBox.setAttribute("aria-hidden", "false");
+          input.setAttribute("aria-expanded", "true");
+          open = true;
+        }
+        function closeSuggestions() {
+          suggestionsBox.classList.add("hidden");
+          suggestionsBox.setAttribute("aria-hidden", "true");
+          input.setAttribute("aria-expanded", "false");
+          activeIndex = -1;
+          open = false;
+          input.removeAttribute("aria-activedescendant");
+        }
+
+        // render suggestions from array
+        function renderSuggestions(q) {
+          suggestionList.innerHTML = "";
+          if (!filtered || filtered.length === 0) {
+            closeSuggestions();
+            return;
+          }
+          filtered.forEach((name, idx) => {
+            const li = document.createElement("li");
+            li.id = `sugg-${idx}`;
+            li.role = "option";
+            li.innerHTML = `<div>${highlight(name, q)}</div>`;
+            li.classList.toggle("active", idx === activeIndex);
+            li.addEventListener("mouseenter", () => {
+              activeIndex = idx;
+              updateVisualActive();
+              updateAriaActive();
+            });
+            li.addEventListener("mouseleave", () => {
+              activeIndex = -1;
+              updateVisualActive();
+              updateAriaActive();
+            });
+            li.addEventListener("click", () => {
+              select(idx);
+            });
+            suggestionList.appendChild(li);
+          });
+          openSuggestions();
+          updateVisualActive();
+          updateAriaActive();
+        }
+
+        function updateVisualActive() {
+          const nodes = suggestionList.querySelectorAll("li");
+          nodes.forEach((n, i) => n.classList.toggle("active", i === activeIndex));
+          scrollActiveIntoView();
+        }
+        function updateAriaActive() {
+          if (activeIndex >= 0) input.setAttribute("aria-activedescendant", `sugg-${activeIndex}`);
+          else input.removeAttribute("aria-activedescendant");
+        }
+        function scrollActiveIntoView() {
+          const el = document.getElementById(`sugg-${activeIndex}`);
+          if (el) el.scrollIntoView({ block: "nearest", behavior: "auto" });
+        }
+
+        // select suggestion
+        function select(idx) {
+          if (idx < 0 || idx >= filtered.length) return;
+          input.value = filtered[idx];
+          closeSuggestions();
+          input.focus();
+        }
+
+        // async fetch suggestions using REST Countries name endpoint
+        async function fetchCountries(query) {
+          // cancel previous
+          if (controller) controller.abort();
+          controller = new AbortController();
+          const signal = controller.signal;
+          try {
+            // restcountries supports CORS
+            const url = `https://restcountries.com/v3.1/name/${encodeURIComponent(
+              query
+            )}?fields=name`;
+            const res = await fetch(url, { signal });
+            if (!res.ok) {
+              // 404 means no results
+              if (res.status === 404) return [];
+              throw new Error("Network error");
+            }
+            const data = await res.json();
+            // map to common names and dedupe / slice
+            const names = data.map((d) => d?.name?.common).filter(Boolean);
+            // dedupe preserving order
+            const dedup = [...new Set(names)].slice(0, MAX);
+            return dedup;
+          } catch (err) {
+            if (err.name === "AbortError") return []; // aborted — ignore
+            console.error("Fetch error", err);
+            return [];
+          } finally {
+            controller = null;
+          }
+        }
+
+        // debounce helper
+        function debounce(fn, ms) {
+          let t;
+          return function (...args) {
+            clearTimeout(t);
+            t = setTimeout(() => fn.apply(this, args), ms);
+          };
+        }
+
+        // handle input (debounced)
+        async function handleInput(e) {
+          const q = e.target.value.trim();
+          if (!q) {
+            filtered = [];
+            renderSuggestions(q);
+            return;
+          }
+          // fetch
+          filtered = await fetchCountries(q);
+          // client-side fallback: if API gave nothing, try substring filtering on a small fallback list (optional)
+          // render
+          activeIndex = -1;
+          renderSuggestions(q);
+        }
+        const debouncedInput = debounce(handleInput, DEBOUNCE_MS);
+
+        // keyboard navigation
+        function onKeyDown(e) {
+          if (e.key === "ArrowDown") {
+            if (!open) {
+              if (input.value.trim()) debouncedInput({ target: input });
+              else return;
+            }
+            if (filtered.length === 0) return;
+            activeIndex = (activeIndex + 1) % filtered.length;
+            updateVisualActive();
+            updateAriaActive();
+            e.preventDefault();
+          } else if (e.key === "ArrowUp") {
+            if (!open) return;
+            if (filtered.length === 0) return;
+            activeIndex = (activeIndex - 1 + filtered.length) % filtered.length;
+            updateVisualActive();
+            updateAriaActive();
+            e.preventDefault();
+          } else if (e.key === "Enter") {
+            if (open && activeIndex >= 0) {
+              e.preventDefault();
+              select(activeIndex);
+            }
+          } else if (e.key === "Escape") {
+            if (open) {
+              closeSuggestions();
+              e.preventDefault();
+            }
+          }
+        }
+
+        // event wiring
+        input.addEventListener("input", debouncedInput);
+        input.addEventListener("keydown", onKeyDown);
+
+        // click outside closes list
+        document.addEventListener("click", (ev) => {
+          if (!document.getElementById("ac-root").contains(ev.target)) closeSuggestions();
+        });
+
+        // helpful debug: if nothing shows, open console and look for errors
+        // initial: no suggestions until user types
+      })();
+    </script>
   </body>
 </html>
