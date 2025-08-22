@@ -6,24 +6,86 @@
     <title>Document</title>
   </head>
   <style>
+    /* General reset */
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
+      font-family: Arial, sans-serif;
     }
 
+    /* Page container */
     body {
-      align-items: center;
       display: flex;
-      flex-direction: column;
-      background-color: aliceblue;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      justify-content: center;
+      align-items: flex-start;
+
+      min-height: 100vh;
+      background: #f4f6f8;
+      padding: 2rem;
+    }
+
+    /* Autocomplete container */
+    .autocomplete-container {
+      width: 400px;
+      background: white;
+      border-radius: 8px;
+      padding: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Label */
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      color: #333;
+    }
+
+    /* Input */
+    input[type="text"] {
+      width: 100%;
+      padding: 0.7rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    input[type="text"]:focus {
+      border-color: #007bff;
+    }
+
+    /* Dropdown list */
+    ul {
+      list-style: none;
+      margin-top: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      max-height: 200px;
+      overflow-y: auto;
+      background: #fff;
+      display: none; /* initially hidden */
+    }
+
+    /* List items */
+    ul li {
+      padding: 0.6rem;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    ul li:hover {
+      background: #f0f0f0;
     }
   </style>
   <body>
-    <div></div>
     <h2>Search Products</h2>
     <input type="text" id="searchBox" placeholder="Type product name..." />
     <ul id="suggestions"></ul>
+    <h2>Country Search (Autocomplete)</h2>
+
+    <script src="script.js"></script>
   </body>
 </html>
