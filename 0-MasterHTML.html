@@ -5,5 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
-  <body></body>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      background-color: aliceblue;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+  </style>
+  <body>
+    <div></div>
+    <h2>Search Products</h2>
+    <input type="text" id="searchBox" placeholder="Type product name..." />
+    <ul id="suggestions"></ul>
+  </body>
 </html>
