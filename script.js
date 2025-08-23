@@ -16,4 +16,8 @@ async function loadCountries() {
     console.error("Failed to load countries:", err.message);
   }
 }
+
+function printFirst(n = 10) {
+  console.log("First", n, "countries:", countries.slice(0, n));
+}
 loadCountries().then((res) => printFirst(12));
