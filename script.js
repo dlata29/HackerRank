@@ -29,7 +29,20 @@ function searchCountries(query) {
 }
 
 function renderResults(matches) {
-  
+  const suggestionList = document.getElementById("suggestions");
+  suggestionList.innerHTML = "";
+
+  if (matches.length > 0) {
+    suggestionList.style.display = "block"; // 👈 show when results exist
+    matches.forEach((match) => {
+      const li = document.createElement("li");
+      li.className = "dvSuggestion";
+      li.textContent = match;
+      suggestionList.appendChild(li);
+    });
+  } else {
+    suggestionList.style.display = "none"; // 👈 hide when empty
+  }
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
