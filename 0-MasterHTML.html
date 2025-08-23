@@ -26,13 +26,6 @@
     }
 
     /* Autocomplete container */
-    .autocomplete-container {
-      width: 400px;
-      background: white;
-      border-radius: 8px;
-      padding: 1rem;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
 
     /* Label */
     label {
@@ -83,14 +76,13 @@
     }
 
     ul li:hover {
-      background: #f0f0f0;
+      background: #c7d9e9;
     }
   </style>
   <body>
     <h2>Search Products</h2>
-    <input type="text" id="searchBox" placeholder="Type product name..." />
+    <input type="text" id="searchBox" placeholder="Type product name..." autocomplete="off" />
     <ul id="suggestions"></ul>
-    <h2>Country Search (Autocomplete)</h2>
 
     <script src="script.js"></script>
   </body>
