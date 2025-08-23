@@ -6,13 +6,15 @@ async function loadCountries() {
   try {
     const res = await fetch(API_URL);
     const data = await res.json();
-    // console.log(data.data);
+    console.log(data.data);
 
-    countries = data.data
-      .map((c) => (c = c.country))
-      .filter(Boolean)
-      .sort();
+    countries = data.data;
+    // .map((c) => (c = c.country))
+    // .filter(Boolean)
+    // .sort();
 
+    console.log(countries[0]);
+    console.log(countries[1]);
     return countries;
   } catch (err) {
     console.error("Failed to load countries:", err.message);
@@ -24,9 +26,12 @@ function printFirst(n = 10) {
 }
 function searchCountries(query) {
   return countries.filter((c) => {
-    return c.toLowerCase().includes(query.toLowerCase());
+    return JSON.stringify(c.country).toLowerCase().includes(query.toLowerCase());
   });
 }
+
+const dvResults = document.querySelector(".dvResults");
+function renderCountryDetails(country) {}
 
 function renderResults(matches) {
   const suggestionList = document.getElementById("suggestions");
@@ -37,8 +42,12 @@ function renderResults(matches) {
     matches.forEach((match) => {
       const li = document.createElement("li");
       li.className = "dvSuggestion";
-      li.textContent = match;
+      li.textContent = match.country;
       suggestionList.appendChild(li);
+
+      li.addEventListener("click", () => {
+        renderCountryDetails(li.textContent);
+      });
     });
   } else {
     suggestionList.style.display = "none"; // 👈 hide when empty
