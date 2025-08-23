@@ -24,16 +24,41 @@ async function loadCountries() {
 function printFirst(n = 10) {
   console.log("First", n, "countries:", countries.slice(0, n));
 }
-function searchCountries(query) {
+function searchCountries(query, exact = false) {
+  query = query.toLowerCase();
+
   return countries.filter((c) => {
-    return JSON.stringify(c.country).toLowerCase().includes(query.toLowerCase());
+    const name = c.country.toLowerCase();
+
+    if (exact) {
+      // ✅ Exact match
+      return name === query;
+    } else {
+      // ✅ Partial match
+      return name.includes(query);
+    }
   });
 }
 
-const dvResults = document.querySelector(".dvResults");
-function renderCountryDetails(country) {}
+function renderCountryDetails(country) {
+  const dvDetails = document.createElement("div");
+  dvDetails.className = "dvDetails";
+
+  const finalResult = searchCountries(country, true)[0];
+  if (!finalResult) return dvDetails;
+
+  const iso = document.createElement("p");
+  const cities = document.createElement("p");
+
+  iso.textContent = "ISO Code: " + finalResult.iso2;
+  cities.textContent = "Cities: " + finalResult.cities.join(", ");
+
+  return dvDetails.append(iso, cities);
+}
 
 function renderResults(matches) {
+  const dvResults = document.querySelector(".dvResults");
+  dvResults.innerHTML = "";
   const suggestionList = document.getElementById("suggestions");
   suggestionList.innerHTML = "";
 
@@ -46,14 +71,17 @@ function renderResults(matches) {
       suggestionList.appendChild(li);
 
       li.addEventListener("click", () => {
-        renderCountryDetails(li.textContent);
+        suggestionList.style.display = "none";
+        const details = renderCountryDetails(li.textContent);
+        dvResults.innerHTML = ""; // clear previous details
+        dvResults.appendChild(details); // append DOM node
       });
     });
   } else {
     suggestionList.style.display = "none"; // 👈 hide when empty
   }
 }
-
+let matches = [];
 document.addEventListener("DOMContentLoaded", async () => {
   console.log("hi");
   await loadCountries();
@@ -68,7 +96,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       renderResults([]);
       return;
     }
-    const matches = searchCountries(query);
+    matches = searchCountries(query);
     console.log(matches);
     renderResults(matches);
   });
