@@ -1,4 +1,3 @@
-const input = document.getElementById("searchBox");
 const suggestionList = document.getElementById("suggestions");
 
 let countries = [];
@@ -13,8 +12,8 @@ async function loadCountries() {
       .map((c) => (c = c.country))
       .filter(Boolean)
       .sort();
-    console.log(countries);
-    console.log("Loaded countries:", countries.length);
+
+    return countries;
   } catch (err) {
     console.error("Failed to load countries:", err.message);
   }
@@ -23,7 +22,32 @@ async function loadCountries() {
 function printFirst(n = 10) {
   console.log("First", n, "countries:", countries.slice(0, n));
 }
+function searchCountries(query) {
+  return countries.filter((c) => {
+    return c.toLowerCase().includes(query.toLowerCase());
+  });
+}
 
-document.addEventListener("DOMContentLoaded", () => {
-  loadCountries();
+function renderResults(matches) {
+  
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  console.log("hi");
+  await loadCountries();
+  console.log("hmm");
+  printFirst();
+
+  const searchInput = document.getElementById("searchBox");
+  searchInput.addEventListener("input", (e) => {
+    const query = e.target.value.trim();
+    const len = query.length;
+    if (query.length === 0) {
+      renderResults([]);
+      return;
+    }
+    const matches = searchCountries(query);
+    console.log(matches);
+    renderResults(matches);
+  });
 });
