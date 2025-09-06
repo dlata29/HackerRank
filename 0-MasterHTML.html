@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Interactive Flipbook</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet" />
+    <style>
+      :root {
+        --book-width: 900px;
+        --book-height: 600px;
+        --page-width: calc(var(--book-width) / 2);
+        --page-height: var(--book-height);
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f9fafb;
+        color: #374151;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        overflow: hidden;
+      }
+
+      .container {
+        text-align: center;
+        padding: 2rem;
+        max-width: var(--book-width);
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: #1f2937;
+      }
+
+      p.subtitle {
+        font-size: 1rem;
+        color: #6b7280;
+        margin-bottom: 2rem;
+      }
+
+      .book-container {
+        width: var(--book-width);
+        height: var(--book-height);
+        position: relative;
+        perspective: 2500px;
+        margin: 0 auto;
+        border-radius: 1rem;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+
+      .book {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        transform-origin: center;
+      }
+
+      .page {
+        position: absolute;
+        top: 0;
+        width: var(--page-width);
+        height: var(--page-height);
+        transition: transform 0.8s ease-in-out;
+        transform-origin: 0 50%;
+        background-color: #f3f4f6;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        backface-visibility: hidden;
+        border-radius: 0.5rem 0 0 0.5rem;
+        box-shadow: inset -5px 0 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .page img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      /* Left side pages */
+      .page.left {
+        left: 0;
+        transform: rotateY(0deg);
+        z-index: 10;
+      }
+
+      /* Right side pages */
+      .page.right {
+        left: 50%;
+        transform: rotateY(0deg);
+        z-index: 10;
+        border-radius: 0 0.5rem 0.5rem 0;
+        box-shadow: inset 5px 0 15px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Turned page effect */
+      .page.turn {
+        transform: rotateY(-180deg);
+        z-index: 20;
+      }
+
+      .btn {
+        background-color: #3b82f6;
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 9999px;
+        border: none;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        margin-top: 2rem;
+      }
+
+      .btn:hover {
+        background-color: #2563eb;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="homepage">
+      <h1>Welcome to My Flipbook!</h1>
+      <p class="subtitle">Click the button to start your journey through the pages.</p>
+      <button class="btn" id="startButton">Begin</button>
+    </div>
+
+    <div class="container hidden" id="flipbook-container">
+      <div class="book-container">
+        <div class="book" id="book">
+          <div class="page left" id="leftPage"></div>
+          <div class="page right" id="rightPage"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const homepage = document.getElementById("homepage");
+        const flipbookContainer = document.getElementById("flipbook-container");
+        const startButton = document.getElementById("startButton");
+        const bookElement = document.getElementById("book");
+        const leftPage = document.getElementById("leftPage");
+        const rightPage = document.getElementById("rightPage");
+
+        // Page data: Each element is an array with two image URLs (left, right)
+        const pages = [
+          [
+            "https://placehold.co/450x600/e0f2fe/0c4a6e?text=The+Beginning",
+            "https://placehold.co/450x600/bfdbfe/1e40af?text=A+New+Chapter",
+          ],
+          [
+            "https://placehold.co/450x600/cffafe/0f766e?text=Page+3",
+            "https://placehold.co/450x600/fecdd3/9f1239?text=Page+4",
+          ],
+          [
+            "https://placehold.co/450x600/dbeafe/1e40af?text=Page+5",
+            "https://placehold.co/450x600/fef08a/b45309?text=Page+6",
+          ],
+          [
+            "https://placehold.co/450x600/a3e635/365314?text=Page+7",
+            "https://placehold.co/450x600/fdba74/c2410c?text=Page+8",
+          ],
+        ];
+
+        let currentPageIndex = 0;
+        let isFlipping = false;
+
+        function updatePages() {
+          // Display images for the current page index
+          const [leftImage, rightImage] = pages[currentPageIndex];
+          leftPage.innerHTML = `<img src="${leftImage}" alt="Left Page">`;
+          rightPage.innerHTML = `<img src="${rightImage}" alt="Right Page">`;
+        }
+
+        function turnPage() {
+          if (isFlipping) return;
+          isFlipping = true;
+
+          // Apply turn class to trigger the CSS transition
+          leftPage.classList.add("turn");
+          rightPage.classList.add("turn");
+
+          // Wait for the animation to complete
+          setTimeout(() => {
+            // Reset page position for next turn
+            leftPage.classList.remove("turn");
+            rightPage.classList.remove("turn");
+
+            // Move to the next page
+            currentPageIndex = (currentPageIndex + 1) % pages.length;
+            updatePages();
+            isFlipping = false;
+          }, 800); // Wait for the transition duration (0.8s)
+        }
+
+        startButton.addEventListener("click", () => {
+          homepage.classList.add("hidden");
+          flipbookContainer.classList.remove("hidden");
+          updatePages();
+        });
+
+        bookElement.addEventListener("click", turnPage);
+      });
+    </script>
+  </body>
+</html>
