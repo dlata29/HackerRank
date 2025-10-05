@@ -3,23 +3,335 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>My Task List</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap"
+      rel="stylesheet" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🟠</text></svg>" />
     <style>
-      #dv {
-        background: aliceblue;
-        width: 100vh;
-        height: 70vh;
-        margin: 0 auto;
-        font-size: 44px;
+      /* --- CSS STYLES --- */
+      /* --- Color Palette from Image --- */
+      :root {
+        --background-color: #f5f1e9;
+        --text-color: #2d2d2d;
+        --item-default-bg: #e5d9c4;
+        --item-completed-bg: #c76f4b;
+        --item-completed-text: #ffffff;
+      }
+
+      /* --- General Styles --- */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+        padding: 2rem;
+      }
+
+      .app-container {
+        width: 100%;
+        max-width: 450px;
+        padding: 2rem;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        margin-top: 2.5rem;
+        border-top: 1px solid var(--item-default-bg);
+        padding-top: 2rem;
+      }
+
+      p {
+        color: #757575;
+        margin-bottom: 2rem;
+      }
+
+      /* --- Input and Button Styles --- */
+      input[type="text"] {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid var(--item-default-bg);
+        border-radius: 8px;
+        font-family: "Poppins", sans-serif;
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        background-color: #fff;
+      }
+
+      input[type="text"]:focus {
+        outline: 2px solid var(--item-completed-bg);
+        border-color: transparent;
+      }
+
+      form {
+        display: flex;
+        gap: 10px;
+      }
+
+      #task-input {
+        flex-grow: 1;
+        margin-bottom: 0;
+      }
+
+      form button {
+        padding: 12px 20px;
+        border: none;
+        background-color: var(--item-completed-bg);
+        color: white;
+        font-family: "Poppins", sans-serif;
+        font-size: 1rem;
+        font-weight: 500;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      form button:hover {
+        background-color: #b35f3f;
+      }
+
+      /* --- Task and Note Item Styles --- */
+      #task-list-container,
+      #notes-container {
+        margin-top: 1.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .task-item,
+      .note-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background-color: var(--item-default-bg);
+        padding: 10px 15px;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      /* Completed State */
+      .task-item.completed {
+        background-color: var(--item-completed-bg);
+        color: var(--item-completed-text);
+        text-decoration: line-through;
+      }
+
+      /* Delete Button */
+      .delete-btn {
+        background: none;
+        border: none;
+        color: var(--text-color);
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 1.1rem;
+        padding: 0 5px;
+        line-height: 1;
+        opacity: 0.5;
+        transition: opacity 0.2s;
+      }
+
+      .delete-btn:hover {
+        opacity: 1;
+      }
+
+      .task-item.completed .delete-btn {
+        color: var(--item-completed-text);
       }
     </style>
   </head>
+
   <body>
-    <div id="dv"></div>
+    <div class="app-container">
+      <div class="tasks-section">
+        <h1>Choose your tasks</h1>
+        <p>What do you need to get done today?</p>
+
+        <form id="task-form">
+          <input type="text" id="task-input" placeholder="Add a new task..." autocomplete="off" />
+          <button type="submit">Add Task</button>
+        </form>
+
+        <div id="task-list-container"></div>
+      </div>
+
+      <div class="notes-section">
+        <h2>Notes</h2>
+        <input
+          type="text"
+          id="note-input"
+          placeholder="Type a note and press Enter..."
+          autocomplete="off" />
+        <div id="notes-container"></div>
+      </div>
+    </div>
+
     <script>
-      const dv = document.getElementById("dv");
-      dv.textContent = "Hello";
+      // --- JAVASCRIPT LOGIC ---
+      document.addEventListener("DOMContentLoaded", () => {
+        // --- Element Selections ---
+        const taskForm = document.getElementById("task-form");
+        const taskInput = document.getElementById("task-input");
+        const taskListContainer = document.getElementById("task-list-container");
+
+        const noteInput = document.getElementById("note-input");
+        const notesContainer = document.getElementById("notes-container");
+
+        // --- Load data from Local Storage on page start ---
+        loadData();
+
+        // --- Event Listeners ---
+        // Handle form submission for adding new tasks
+        taskForm.addEventListener("submit", (e) => {
+          e.preventDefault(); // Prevent page refresh
+          const taskText = taskInput.value.trim();
+          if (taskText !== "") {
+            addTask(taskText);
+            taskInput.value = ""; // Clear input field
+            taskInput.focus();
+            saveData(); // Save after adding
+          }
+        });
+
+        // Handle 'Enter' key press for adding new notes
+        noteInput.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            const noteText = noteInput.value.trim();
+            if (noteText !== "") {
+              addNote(noteText);
+              noteInput.value = ""; // Clear input field
+              saveData(); // Save after adding
+            }
+          }
+        });
+
+        // Use event delegation to handle clicks on tasks (for completion and deletion)
+        taskListContainer.addEventListener("click", (e) => {
+          const target = e.target;
+          // Check if a delete button was clicked
+          if (target.classList.contains("delete-btn")) {
+            target.parentElement.remove();
+            saveData(); // Save after deleting
+          }
+          // Check if a task item was clicked
+          else if (target.classList.contains("task-item")) {
+            target.classList.toggle("completed");
+            saveData(); // Save after toggling completion
+          }
+        });
+
+        // Use event delegation to handle clicks on notes (for deletion)
+        notesContainer.addEventListener("click", (e) => {
+          const target = e.target;
+          if (target.classList.contains("delete-btn")) {
+            target.parentElement.remove();
+            saveData(); // Save after deleting
+          }
+        });
+
+        // --- Functions ---
+        /**
+         * Creates and adds a new task to the DOM.
+         * @param {string} text - The text content for the task.
+         * @param {boolean} isCompleted - The completion status of the task.
+         */
+        function addTask(text, isCompleted = false) {
+          const taskItem = document.createElement("div");
+          taskItem.className = "task-item";
+
+          if (isCompleted) {
+            taskItem.classList.add("completed");
+          }
+
+          const taskTextNode = document.createElement("span");
+          taskTextNode.textContent = text;
+          taskItem.appendChild(taskTextNode);
+
+          const deleteBtn = document.createElement("button");
+          deleteBtn.className = "delete-btn";
+          deleteBtn.innerHTML = "&times;";
+
+          taskItem.appendChild(deleteBtn);
+          taskListContainer.appendChild(taskItem);
+        }
+
+        /**
+         * Creates and adds a new note to the DOM.
+         * @param {string} text - The text content for the note.
+         */
+        function addNote(text) {
+          const noteItem = document.createElement("div");
+          noteItem.className = "note-item";
+
+          const noteTextNode = document.createElement("span");
+          noteTextNode.textContent = text;
+          noteItem.appendChild(noteTextNode);
+
+          const deleteBtn = document.createElement("button");
+          deleteBtn.className = "delete-btn";
+          deleteBtn.innerHTML = "&times;";
+
+          noteItem.appendChild(deleteBtn);
+          notesContainer.appendChild(noteItem);
+        }
+
+        /**
+         * Saves all current tasks and notes to localStorage.
+         */
+        function saveData() {
+          const tasks = [];
+          document.querySelectorAll(".task-item").forEach((item) => {
+            tasks.push({
+              text: item.querySelector("span").textContent,
+              completed: item.classList.contains("completed"),
+            });
+          });
+          localStorage.setItem("tasks", JSON.stringify(tasks));
+
+          const notes = [];
+          document.querySelectorAll(".note-item").forEach((item) => {
+            notes.push(item.querySelector("span").textContent);
+          });
+          localStorage.setItem("notes", JSON.stringify(notes));
+        }
+
+        /**
+         * Loads tasks and notes from localStorage and displays them.
+         */
+        function loadData() {
+          const savedTasks = JSON.parse(localStorage.getItem("tasks"));
+          if (savedTasks) {
+            savedTasks.forEach((task) => addTask(task.text, task.completed));
+          }
+
+          const savedNotes = JSON.parse(localStorage.getItem("notes"));
+          if (savedNotes) {
+            savedNotes.forEach((note) => addNote(note));
+          }
+        }
+      });
     </script>
-    <script src="./script.js"></script>
   </body>
 </html>
